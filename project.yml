@@ -1,0 +1,43 @@
+name: TestMELI
+
+targets:
+  TestMELI:
+    type: application
+    platform: iOS
+    sources:
+      - path: TestMELI
+    settings:
+       PRODUCT_BUNDLE_IDENTIFIER: com.meli.testmeli
+       INFOPLIST_FILE: TestMELI/Info.plist
+       CODE_SIGN_STYLE: "Manual"
+       DEVELOPMENT_TEAM: ""
+       PROVISIONING_PROFILE: ""
+       SWIFT_VERSION: "5.0"
+    dependencies: []
+
+  TestMELITests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: TestMELITests
+    settings:
+      TEST_HOST: "$(BUILT_PRODUCTS_DIR)/TestMELI.app/TestMELI"
+      BUNDLE_LOADER: "$(TEST_HOST)"
+      CODE_SIGNING_ALLOWED: NO
+
+    dependencies:
+      - target: TestMELI
+
+schemas:
+
+  TestMELI:
+    build:
+      targets:
+        TestMELI: all
+        TestMELITests: all
+    test:
+      gatherCoverageData: true
+      targets:
+        - target: TestMELITests
+    run:
+      config: Debug
