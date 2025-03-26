@@ -10,6 +10,7 @@ import UIKit
 
 protocol LoginCoordinatorProtocol: AnyObject {
     func showAlert(title: String, message: String) -> Void
+    func showListProducts() -> Void
 }
 
 class LoginCoordinator: BaseCoordinator {
@@ -37,5 +38,10 @@ extension LoginCoordinator: LoginCoordinatorProtocol {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         configuration.navigationController?.present(alert, animated: true)
+    }
+    
+    func showListProducts() -> Void {
+        let coordinator = ListProductCoordinator(with: configuration)
+        coordinator.start()
     }
 }

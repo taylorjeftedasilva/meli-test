@@ -23,7 +23,7 @@ class SplashViewController: CoordinatorViewController {
 extension SplashViewController: SplashViewProtocol {
     
     func animationCompletion() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: { [unowned self] in
+        DispatchQueue.main.asyncAfter(deadline: .now(), execute: { [unowned self] in
             self.delegate?.startLogin()
         })
     }
@@ -33,7 +33,7 @@ extension SplashViewController: SplashViewProtocol {
 
 extension SplashViewController: UIConfigurations {
     
-    func setupHierarch() {
+    func setupHierarchy() {
         view.addSubview(splashView)
     }
     

@@ -43,7 +43,7 @@ extension LoginViewController: UIConfigurations {
         loginView.delegate = self
     }
     
-    func setupHierarch() {
+    func setupHierarchy() {
         view.addSubview(loginView)
     }
     

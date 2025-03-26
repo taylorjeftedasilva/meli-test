@@ -73,10 +73,10 @@ extension LoginView: UIConfigurations {
     
     func setupConfigurations() {
         self.backgroundColor = MarketplaceDeliveryColor().getColor(.amarelo)
-        emailTextField.becomeFirstResponder()
+//        emailTextField.becomeFirstResponder()
     }
     
-    func setupHierarch() {
+    func setupHierarchy() {
         self.addSubview(titleLabel)
         self.addSubview(emailTextField)
         self.addSubview(passwordTextField)

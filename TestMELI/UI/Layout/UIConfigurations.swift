@@ -10,14 +10,14 @@ import Foundation
 
 protocol UIConfigurations {
     func setup() -> Void
-    func setupHierarch() -> Void
+    func setupHierarchy() -> Void
     func setupConstraints() -> Void
     func setupConfigurations() -> Void
 }
 
 extension UIConfigurations {
     func setup() {
-        setupHierarch()
+        setupHierarchy()
         setupConstraints()
         setupConfigurations()
     }

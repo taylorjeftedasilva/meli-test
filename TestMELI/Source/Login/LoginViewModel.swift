@@ -37,11 +37,16 @@ extension LoginViewModel: LoginViewModelProtocol {
     }
     
     private func login(_ email: String,_ password: String) {
-        let url = "https://dummyjson.com/auth/login" // URL do endpoint de login
-        let parameters: [String: Any] = [
-            "username": email,
-            "password": password
-        ]
+        AuthService.shared.login(username: "emilys", password: "emilyspass") { [weak self] success in
+            if success {
+                DispatchQueue.main.async {
+                    self?.delegate?.showListProducts()
+                }
+            } else {
+                print("Falha no login")
+            }
+        }
+//        delegate?.showListProducts()
 //        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
 //            .validate()
 //            .responseDecodable(of: LoginResponse.self) { response in

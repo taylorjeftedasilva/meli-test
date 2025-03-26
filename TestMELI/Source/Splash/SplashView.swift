@@ -47,7 +47,7 @@ extension SplashView: UIConfigurations {
         fadeIn()
     }
     
-    func setupHierarch() {
+    func setupHierarchy() {
         self.addSubview(titleLabel)
     }
     

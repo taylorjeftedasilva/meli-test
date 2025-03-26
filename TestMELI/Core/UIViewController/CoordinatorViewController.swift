@@ -12,7 +12,6 @@ protocol CoordinatedProtocol: AnyObject {
     var coordinator: CoordinatorProtocol? { get set }
 }
 
-
 open class CoordinatorViewController: UIViewController, CoordinatedProtocol {
     
     public var coordinator: CoordinatorProtocol?
