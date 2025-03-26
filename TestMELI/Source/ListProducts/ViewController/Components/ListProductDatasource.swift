@@ -25,5 +25,4 @@ class ListProductDatasource: NSObject, UITableViewDataSource {
         cell?.configure(with: product)
         return cell ?? UITableViewCell()
     }
-    
 }

@@ -37,28 +37,24 @@ extension LoginViewModel: LoginViewModelProtocol {
     }
     
     private func login(_ email: String,_ password: String) {
-        AuthService.shared.login(username: "emilys", password: "emilyspass") { [weak self] success in
-            if success {
+//        "emilys" "emilyspass"
+        AuthService.shared.login(username: email, password: password) { [weak self] result in
+            switch result {
+            case .success:
                 DispatchQueue.main.async {
                     self?.delegate?.showListProducts()
                 }
-            } else {
-                print("Falha no login")
+            case .failure(.noInternetConnection):
+                DispatchQueue.main.async {
+                    self?.delegate?.showAlert(title: "Sem internet!", message: "Verifique sua conexão.")
+                }
+            case .failure(let error):
+                let logger = Logger(subsystem: "com.testmeli.app", category: "login")
+                logger.info("Erro ao tentar logar: \(error)")
+                DispatchQueue.main.async {
+                    self?.delegate?.showAlert(title: "Dados incorretos", message: "Por favor verifique os dados e tente novamente")
+                }
             }
         }
-//        delegate?.showListProducts()
-//        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
-//            .validate()
-//            .responseDecodable(of: LoginResponse.self) { response in
-//                switch response.result {
-//                case .success(let loginResponse):
-//                    TokenManager.shared.saveTokens(accessToken: loginResponse.accessToken,
-//                                                   refreshToken: loginResponse.refreshToken)
-//                case .failure(let error):
-//                    let logger = Logger(subsystem: "com.marketplacedelivery.app", category: "login")
-//                    logger.error("Erro ocorrido: \(error.localizedDescription)")
-//                    self.delegate?.showAlert(title: "Dados incorretos", message: "Por favor verifique os dados e tente novamente")
-//                }
-//            }
     }
 }

@@ -25,7 +25,11 @@ class ListProductController: CoordinatorViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        navigationController?.isNavigationBarHidden = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationController()
     }
 }
 
@@ -37,12 +41,17 @@ extension ListProductController: UIConfigurations {
             switch result {
             case .success(let products):
                 self?.listProductsView.setProductDataSource(products: products)
-            case .failure(let error):
-                // Mostre um erro ou mensagem na UI
-//                self?.showError(error)
-                print("erro")
+                DispatchQueue.main.async {
+                    self?.stopLoading()
+                }
+            case .failure(_):
+                DispatchQueue.main.async {
+                    self?.stopLoading()
+                }
             case .loading(_):
-                print("isloading")
+                DispatchQueue.main.async {
+                    self?.startLoading()
+                }
             }
         }
         self.viewModel.fetchProdutos()
@@ -58,5 +67,13 @@ extension ListProductController: UIConfigurations {
         listProductsView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         listProductsView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         listProductsView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    }
+}
+
+extension ListProductController {
+    func setupNavigationController() {
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.isNavigationBarHidden = true
+        }
     }
 }

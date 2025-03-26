@@ -13,7 +13,7 @@ protocol ListProductsServiceProtocol {
 
 class ListProductsService: ListProductsServiceProtocol {
     private let client : APIClientProtocol
-    private let entrypoint = LocalizedString.baseURL.value + "products"
+    private let entrypoint = LocalizedString.baseURL.value + "products?limit=0"
     
     init(client: APIClientProtocol = APIClient.shared) {
         self.client = client

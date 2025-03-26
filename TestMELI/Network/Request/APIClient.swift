@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 
 protocol APIClientProtocol {
     func request<T: Decodable>(
@@ -30,12 +31,12 @@ enum HTTPMethod: String {
     }
 }
 
-
 class APIClient: APIClientProtocol {
     
     static let shared = APIClient()
     private let tokenManager: TokenManagerProtocol
     private let authService: AuthService
+    private let logger = Logger(subsystem: "com.testmeli.app", category: "Networking")
     
     private init(tokenManager: TokenManagerProtocol = TokenManager.shared, authService: AuthService = AuthService.shared) {
         self.tokenManager = tokenManager
@@ -49,7 +50,10 @@ class APIClient: APIClientProtocol {
         requiresAuth: Bool = true,
         completion: @escaping (Result<T, APIError>) -> Void
     ) {
+        logger.info("Iniciando requisição para \(endpoint) com método \(method.rawValue)")
+        
         guard let url = URL(string: endpoint) else {
+            logger.error("Erro: URL inválida - \(endpoint)")
             completion(.failure(.invalidURL))
             return
         }
@@ -59,38 +63,60 @@ class APIClient: APIClientProtocol {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
         if let body = body {
-            request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+            do {
+                request.httpBody = try JSONSerialization.data(withJSONObject: body)
+                logger.info("Corpo da requisição: \(body.description)")
+            } catch {
+                logger.error("Erro ao serializar body: \(error.localizedDescription)")
+                completion(.failure(.decodingError))
+                return
+            }
         }
         
         if requiresAuth, let token = tokenManager.getToken() {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            logger.info("Token de autenticação adicionado ao header")
         }
         
         performRequest(request: request, completion: completion)
     }
     
     private func performRequest<T: Decodable>(request: URLRequest, completion: @escaping (Result<T, APIError>) -> Void) {
+        logger.info("Enviando requisição para \(request.url?.absoluteString ?? "URL desconhecida")")
+        
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let urlError = error as? URLError, urlError.code == .notConnectedToInternet {
+                self.logger.error("Erro: Sem conexão com a internet")
                 completion(.failure(.noInternetConnection))
                 return
             }
             
             if let error = error {
+                self.logger.error("Erro desconhecido: \(error.localizedDescription)")
                 completion(.failure(.unknown(error)))
                 return
             }
             
             guard let httpResponse = response as? HTTPURLResponse else {
+                self.logger.error("Erro: Resposta inválida")
                 completion(.failure(.invalidResponse))
                 return
             }
             
+            self.logger.info("Resposta recebida: \(httpResponse.statusCode)")
+            
             if httpResponse.statusCode == 401 {
-                self.authService.refreshToken { success in
-                    if success {
+                self.logger.warning("Token expirado, tentando refresh token...")
+                self.authService.refreshToken { result in
+                    switch result {
+                    case .success:
+                        self.logger.info("Refresh token bem-sucedido, reexecutando requisição")
                         self.retryRequest(request: request, completion: completion)
-                    } else {
+                    case .failure(.noInternetConnection):
+                        self.logger.error("Erro: Sem conexão durante refresh token")
+                        completion(.failure(.unauthorized))
+                    case .failure(let error):
+                        self.logger.error("Erro ao renovar token: \(error)")
                         completion(.failure(.unauthorized))
                     }
                 }
@@ -98,14 +124,17 @@ class APIClient: APIClientProtocol {
             }
             
             guard let data = data else {
+                self.logger.error("Erro: Nenhum dado recebido")
                 completion(.failure(.noData))
                 return
             }
             
             do {
                 let decodedResponse = try JSONDecoder().decode(T.self, from: data)
+                self.logger.info("Resposta decodificada com sucesso")
                 completion(.success(decodedResponse))
             } catch {
+                self.logger.error("Erro ao decodificar JSON: \(error.localizedDescription)")
                 completion(.failure(.decodingError))
             }
         }.resume()
@@ -117,7 +146,7 @@ class APIClient: APIClientProtocol {
             newRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
+        logger.info("Reexecutando requisição após refresh token")
         performRequest(request: newRequest, completion: completion)
     }
 }
-

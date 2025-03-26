@@ -19,7 +19,6 @@ struct Product: Decodable {
     let category: String
     let price: Double
     let thumbnail: String
-
 }
 
 struct Dimensions: Decodable {

@@ -43,6 +43,7 @@
 		349D8A902D9460A500884AC5 /* LocalizedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349D8A8F2D9460A400884AC5 /* LocalizedString.swift */; };
 		349D8A922D94610500884AC5 /* Localizable.strings in Sources */ = {isa = PBXBuildFile; fileRef = 349D8A912D94610300884AC5 /* Localizable.strings */; };
 		349D8A952D946A3600884AC5 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349D8A942D946A3400884AC5 /* Binding.swift */; };
+		349D8A972D94956000884AC5 /* ListProductDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 349D8A962D94955200884AC5 /* ListProductDelegate.swift */; };
 		C3DB2818B46BDE953F8C8602 /* TestMELITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD45C9105D9A8717BB900900 /* TestMELITests.swift */; };
 		C7DD4130C06D04FDF0E2CBCA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D8883537EC2EB659FFC837 /* SceneDelegate.swift */; };
 		FACE7E030B9BC8A208A3C116 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35A214EE4665ACE6F12D74B5 /* Assets.xcassets */; };
@@ -93,6 +94,7 @@
 		349D8A8F2D9460A400884AC5 /* LocalizedString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedString.swift; sourceTree = "<group>"; };
 		349D8A912D94610300884AC5 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		349D8A942D946A3400884AC5 /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
+		349D8A962D94955200884AC5 /* ListProductDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListProductDelegate.swift; sourceTree = "<group>"; };
 		35A214EE4665ACE6F12D74B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5F06D7EB29A80995D7E0D223 /* TestMELI.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = TestMELI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DB4CE29477F1A477B2DA408 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 		349D8A6D2D9344DD00884AC5 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				349D8A962D94955200884AC5 /* ListProductDelegate.swift */,
 				349D8A712D93455A00884AC5 /* View */,
 				349D8A6F2D93454E00884AC5 /* ListProductDatasource.swift */,
 			);
@@ -527,6 +530,7 @@
 				349D8A452D9330A500884AC5 /* CoordinatorConfiguration.swift in Sources */,
 				349D8A462D9330A500884AC5 /* TokenManager.swift in Sources */,
 				349D8A372D93308D00884AC5 /* UIColor+Externsions.swift in Sources */,
+				349D8A972D94956000884AC5 /* ListProductDelegate.swift in Sources */,
 				349D8A7F2D941AA700884AC5 /* APIError.swift in Sources */,
 				349D8A612D9335DA00884AC5 /* ListProductCoordinator.swift in Sources */,
 				349D8A382D93308D00884AC5 /* MarketplaceDeliveryColor.swift in Sources */,
