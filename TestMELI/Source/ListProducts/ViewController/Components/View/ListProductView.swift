@@ -7,6 +7,9 @@
 
 import UIKit
 
+protocol ListProductViewProtocol: AnyObject {
+    func showDatail(_ id: Int) -> Void
+}
 
 class ListProductView: UIView {
     
@@ -33,8 +36,9 @@ class ListProductView: UIView {
         return view
     }()
 
-    let dataSource = ListProductDatasource()
-    let tableDelegate = ListProductDelegate()
+    private let dataSource = ListProductDatasource()
+    private let tableDelegate = ListProductDelegate()
+    weak var delegate: ListProductViewProtocol? = nil
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,7 +60,7 @@ class ListProductView: UIView {
 extension ListProductView: UIConfigurations {
     
     func setupConfigurations() {
-//        tableDelegate.delegate = self
+        tableDelegate.delegate = self
         tableView.dataSource = dataSource
         tableView.delegate = tableDelegate
         tableView.register(ProductCell.self, forCellReuseIdentifier: "ProductCell")
@@ -110,5 +114,12 @@ extension ListProductView: UISearchBarDelegate {
     
     private func hideOverlay() {
         overlayView.isHidden = true
+    }
+}
+
+extension ListProductView: ListProductDelegateProtocol {
+    func showDetailProduct(index: Int) {
+        let id = dataSource.getProductID(index: index)
+        delegate?.showDatail(id)
     }
 }

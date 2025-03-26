@@ -11,6 +11,7 @@ class ListProductController: CoordinatorViewController {
     
     private let listProductsView: ListProductView
     private let viewModel: ListProductViewModel
+    weak var delegate: ListProductCoordinatorProtocol? = nil
     
     init(coordinator: CoordinatorProtocol, nibName: String? = nil, bundle: Bundle? = nil, viewModel: ListProductViewModel) {
         self.viewModel  = viewModel
@@ -37,6 +38,7 @@ class ListProductController: CoordinatorViewController {
 extension ListProductController: UIConfigurations {
     
     func setupConfigurations() {
+        listProductsView.delegate = self
         viewModel.data.bind { [weak self] result in
             switch result {
             case .success(let products):
@@ -75,5 +77,11 @@ extension ListProductController {
         DispatchQueue.main.async { [weak self] in
             self?.navigationController?.isNavigationBarHidden = true
         }
+    }
+}
+
+extension ListProductController: ListProductViewProtocol {
+    func showDatail(_ id: Int) {
+        delegate?.showDetail(id)
     }
 }

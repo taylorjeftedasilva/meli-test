@@ -8,6 +8,10 @@
 import Foundation
 import UIKit
 
+protocol ListProductCoordinatorProtocol: AnyObject {
+    func showDetail(_ id: Int) -> Void
+}
+
 class ListProductCoordinator: BaseCoordinator {
     
     override func start() {
@@ -16,6 +20,13 @@ class ListProductCoordinator: BaseCoordinator {
                                                       nibName: nil,
                                                       bundle: nil,
                                                       viewModel: viewModel)
+        listProductsController.delegate = self
         configuration.navigationController?.pushViewController(listProductsController, animated: true)
+    }
+}
+
+extension ListProductCoordinator: ListProductCoordinatorProtocol {
+    func showDetail(_ id: Int) {
+        print("chamando Detail: \(id)")
     }
 }
