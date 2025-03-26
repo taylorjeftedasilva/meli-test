@@ -1,6 +1,6 @@
 //
-//  MarketplaceDeliveryColor.swift
-//  MarketplaceDelivery
+//  TestMELIColors.swift
+//  TestMELI
 //
 //  Created by Taylor Jefte da silva on 25/03/25.
 //
@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class MarketplaceDeliveryColor: UIColor {
+class TestMELIColors: UIColor {
     
     enum Colors {
         case amarelo

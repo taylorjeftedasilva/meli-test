@@ -64,11 +64,11 @@ class AuthService {
                     } else {
                         completion(.failure(.invalidResponse))
                     }
-                } catch let decodingError {
+                } catch _ {
                     completion(.failure(.decodingError))
                 }
             }.resume()
-        } catch let error {
+        } catch _ {
             completion(.failure(.decodingError))
         }
     }
@@ -112,7 +112,7 @@ class AuthService {
                 } else {
                     completion(.failure(.invalidResponse))
                 }
-            } catch let decodingError {
+            } catch _ {
                 completion(.failure(.decodingError))
             }
         }.resume()
