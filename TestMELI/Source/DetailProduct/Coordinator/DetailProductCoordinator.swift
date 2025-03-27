@@ -16,6 +16,8 @@ class DetailProductCoordinator: BaseCoordinator {
                                                       nibName: nil,
                                                       bundle: nil,
                                                       viewModel: viewModel)
+        configuration.navigationController?.isNavigationBarHidden = false
+        configuration.navigationController?.setupNavigationControllerColor()
         configuration.navigationController?.pushViewController(detailController, animated: true)
     }
 }

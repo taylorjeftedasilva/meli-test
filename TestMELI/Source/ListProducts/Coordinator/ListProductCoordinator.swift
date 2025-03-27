@@ -21,6 +21,7 @@ class ListProductCoordinator: BaseCoordinator {
                                                       bundle: nil,
                                                       viewModel: viewModel)
         listProductsController.delegate = self
+        configuration.navigationController?.isNavigationBarHidden = true
         configuration.navigationController?.pushViewController(listProductsController, animated: true)
     }
 }

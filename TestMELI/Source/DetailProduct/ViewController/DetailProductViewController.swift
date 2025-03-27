@@ -74,6 +74,7 @@ extension DetailProductViewController {
     func setupNavigationController() {
         DispatchQueue.main.async { [weak self] in
             self?.navigationController?.isNavigationBarHidden = false
+            self?.navigationController?.setupNavigationControllerColor()
         }
     }
 }
