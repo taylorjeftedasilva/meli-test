@@ -28,6 +28,7 @@ class ListProductCoordinator: BaseCoordinator {
 extension ListProductCoordinator: ListProductCoordinatorProtocol {
     func showDetail(_ id: Int) {
         let detail = DetailProductCoordinator(with: configuration, parentCoordinator: self)
+        detail.productID = id
         detail.start()
     }
 }
