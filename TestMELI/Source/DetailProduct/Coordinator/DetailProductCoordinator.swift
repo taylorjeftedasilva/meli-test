@@ -1,21 +1,21 @@
 //
-//  DetailCoordinator.swift
+//  DetailProductCoordinator.swift
 //  TestMELI
 //
 //  Created by Taylor Jefte da silva on 26/03/25.
 //
 
-class DetailCoordinator: BaseCoordinator {
+class DetailProductCoordinator: BaseCoordinator {
     
-    var productID: String? = nil
+    var productID: Int? = nil
     
     override func start() {
-        let viewModel = DetailViewModel()
-        let detailController = DetailViewController(coordinator: self,
+        guard let productID = productID else { return }
+        let viewModel = DetailProductViewModel(id: productID)
+        let detailController = DetailProductViewController(coordinator: self,
                                                       nibName: nil,
                                                       bundle: nil,
                                                       viewModel: viewModel)
         configuration.navigationController?.pushViewController(detailController, animated: true)
     }
-    
 }
