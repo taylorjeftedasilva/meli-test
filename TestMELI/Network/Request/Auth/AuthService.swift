@@ -7,6 +7,8 @@
 
 import Foundation
 
+import Foundation
+
 class AuthService {
     
     static let shared = AuthService()
@@ -16,9 +18,9 @@ class AuthService {
         self.tokenManager = tokenManager
     }
     
-    func login(username: String, password: String, completion: @escaping (Bool) -> Void) {
+    func login(username: String, password: String, completion: @escaping (Result<Bool, APIError>) -> Void) {
         guard let url = URL(string: LocalizedString.baseURL.value + "auth/login") else {
-            completion(false)
+            completion(.failure(.invalidURL))
             return
         }
         
@@ -34,20 +36,22 @@ class AuthService {
             
             URLSession.shared.dataTask(with: request) { data, response, error in
                 if let error = error {
-                    print("Erro de requisição:", error.localizedDescription)
-                    completion(false)
+                    if (error as? URLError)?.code == .notConnectedToInternet {
+                        completion(.failure(.noInternetConnection))
+                    } else {
+                        completion(.failure(.unknown(error)))
+                    }
                     return
                 }
                 
                 guard let data = data,
                       let httpResponse = response as? HTTPURLResponse else {
-                    print("Resposta inválida")
-                    completion(false)
+                    completion(.failure(.invalidResponse))
                     return
                 }
                 
                 guard httpResponse.statusCode == 200 else {
-                    completion(false)
+                    completion(.failure(.unauthorized))
                     return
                 }
                 
@@ -56,23 +60,23 @@ class AuthService {
                        let accessToken = json["accessToken"] as? String,
                        let refreshToken = json["refreshToken"] as? String {
                         self.tokenManager.saveTokens(accessToken: accessToken, refreshToken: refreshToken)
-                        completion(true)
+                        completion(.success(true))
                     } else {
-                        completion(false)
+                        completion(.failure(.invalidResponse))
                     }
-                } catch {
-                    completion(false)
+                } catch _ {
+                    completion(.failure(.decodingError))
                 }
             }.resume()
-        } catch {
-            completion(false)
+        } catch _ {
+            completion(.failure(.decodingError))
         }
     }
     
-    func refreshToken(completion: @escaping (Bool) -> Void) {
+    func refreshToken(completion: @escaping (Result<Bool, APIError>) -> Void) {
         guard let refreshToken = tokenManager.getRefreshToken(),
               let url = URL(string: LocalizedString.baseURL.value + "refresh") else {
-            completion(false)
+            completion(.failure(.invalidURL))
             return
         }
         
@@ -83,10 +87,19 @@ class AuthService {
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         
         URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                if (error as? URLError)?.code == .notConnectedToInternet {
+                    completion(.failure(.noInternetConnection))
+                } else {
+                    completion(.failure(.unknown(error)))
+                }
+                return
+            }
+            
             guard let data = data,
                   let httpResponse = response as? HTTPURLResponse,
                   httpResponse.statusCode == 200 else {
-                completion(false)
+                completion(.failure(.unauthorized))
                 return
             }
             
@@ -95,12 +108,12 @@ class AuthService {
                    let newAccessToken = json["accessToken"],
                    let newRefreshToken = json["refreshToken"] {
                     self.tokenManager.saveTokens(accessToken: newAccessToken, refreshToken: newRefreshToken)
-                    completion(true)
+                    completion(.success(true))
                 } else {
-                    completion(false)
+                    completion(.failure(.invalidResponse))
                 }
-            } catch {
-                completion(false)
+            } catch _ {
+                completion(.failure(.decodingError))
             }
         }.resume()
     }

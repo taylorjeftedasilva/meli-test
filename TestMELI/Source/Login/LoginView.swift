@@ -72,7 +72,7 @@ class LoginView: UIView {
 extension LoginView: UIConfigurations {
     
     func setupConfigurations() {
-        self.backgroundColor = MarketplaceDeliveryColor().getColor(.amarelo)
+        self.backgroundColor = TestMELIColors().getColor(.amarelo)
 //        emailTextField.becomeFirstResponder()
     }
     

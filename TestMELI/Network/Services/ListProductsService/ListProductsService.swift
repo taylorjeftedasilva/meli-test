@@ -8,18 +8,18 @@
 import Foundation
 
 protocol ListProductsServiceProtocol {
-    func fetchProducts<T: Decodable>(completion: @escaping (Result<T, APIError>) -> Void)
+    func fetchProducts(completion: @escaping (Result<ListProductsData, APIError>) -> Void)
 }
 
 class ListProductsService: ListProductsServiceProtocol {
     private let client : APIClientProtocol
-    private let entrypoint = LocalizedString.baseURL.value + "products"
+    private let entrypoint = LocalizedString.baseURL.value + "products?limit=0"
     
     init(client: APIClientProtocol = APIClient.shared) {
         self.client = client
     }
     
-    func fetchProducts<T: Decodable>(completion: @escaping (Result<T, APIError>) -> Void) {
+    func fetchProducts(completion: @escaping (Result<ListProductsData, APIError>) -> Void) {
         client.request(endpoint: entrypoint,
                        method: .get,
                        body: nil,

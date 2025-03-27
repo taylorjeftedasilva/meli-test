@@ -53,7 +53,7 @@ final class ProductCell: UITableViewCell {
         return view
     }()
     
-    private var product: Product?
+    private var thumbnail: String?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -122,13 +122,13 @@ extension ProductCell {
     func configure(with produto: Product) {
         titleView.text = produto.title
         priceView.text = "Price: \(produto.price)"
-        product = produto
+        thumbnail = produto.thumbnail
         productImageView.image = nil
         loadingIndicator.startAnimating()
         
         ImageLoader.shared.loadImage(from: produto.thumbnail) { [weak self] image, url in
             guard let self = self else { return }
-            if self.product?.thumbnail == url { 
+            if self.thumbnail == url { 
                 DispatchQueue.main.async {
                     self.productImageView.image = image
                     self.loadingIndicator.stopAnimating()

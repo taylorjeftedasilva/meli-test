@@ -23,10 +23,10 @@ class ListProductViewModel {
     }
     
     func fetchProdutos() {
-        service.fetchProducts { (result: Result<ProductResponse, APIError>) in
+        service.fetchProducts { result in
             switch result {
-            case .success(let products):
-                self.data.value = .success(products)
+            case .success(let data):
+                self.data.value = .success(ProductResponse(data: data))
             case .failure(let error):
                 self.data.value = .failure(error)
             }

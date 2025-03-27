@@ -26,4 +26,7 @@ class ListProductDatasource: NSObject, UITableViewDataSource {
         return cell ?? UITableViewCell()
     }
     
+    func getProductID(index: Int) -> Int {
+        return self.produtos?.products[index].id ?? 0
+    }
 }

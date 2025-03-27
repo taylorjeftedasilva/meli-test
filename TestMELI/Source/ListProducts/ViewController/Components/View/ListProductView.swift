@@ -7,11 +7,16 @@
 
 import UIKit
 
+protocol ListProductViewProtocol: AnyObject {
+    func showDatail(_ id: Int) -> Void
+}
+
 class ListProductView: UIView {
     
     private lazy var searchBar: UISearchBar = {
         let view = UISearchBar()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.delegate = self
         return view
     }()
     
@@ -21,7 +26,19 @@ class ListProductView: UIView {
         return view
     }()
     
-    let dataSource = ListProductDatasource()
+    private lazy var overlayView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        view.isHidden = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTableViewTap))
+        view.addGestureRecognizer(tapGesture)
+        return view
+    }()
+
+    private let dataSource = ListProductDatasource()
+    private let tableDelegate = ListProductDelegate()
+    weak var delegate: ListProductViewProtocol? = nil
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,15 +49,20 @@ class ListProductView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setProductDataSource(products:  ProductResponse) {
+    func setProductDataSource(products: ProductResponse) {
         dataSource.update(produtos: products)
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
 }
 
 extension ListProductView: UIConfigurations {
     
     func setupConfigurations() {
+        tableDelegate.delegate = self
         tableView.dataSource = dataSource
+        tableView.delegate = tableDelegate
         tableView.register(ProductCell.self, forCellReuseIdentifier: "ProductCell")
         tableView.estimatedRowHeight = 150
     }
@@ -48,17 +70,56 @@ extension ListProductView: UIConfigurations {
     func setupHierarchy() {
         self.addSubview(searchBar)
         self.addSubview(tableView)
+        self.addSubview(overlayView)
     }
     
     func setupConstraints() {
         
-        searchBar.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
-        searchBar.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
-        searchBar.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
+        searchBar.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor).isActive = true
+        searchBar.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        searchBar.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
         
-        tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 0).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
-        tableView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 0).isActive = true
-        tableView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: 0).isActive = true
+        tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        tableView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        tableView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        
+        overlayView.topAnchor.constraint(equalTo: searchBar.bottomAnchor).isActive = true
+        overlayView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        overlayView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        overlayView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+    }
+}
+
+extension ListProductView {
+    
+    @objc func handleTableViewTap() {
+        searchBar.endEditing(true)
+        hideOverlay()
+    }
+}
+
+extension ListProductView: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        showOverlay()
+    }
+
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        hideOverlay()
+    }
+    
+    private func showOverlay() {
+        overlayView.isHidden = false
+    }
+    
+    private func hideOverlay() {
+        overlayView.isHidden = true
+    }
+}
+
+extension ListProductView: ListProductDelegateProtocol {
+    func showDetailProduct(index: Int) {
+        let id = dataSource.getProductID(index: index)
+        delegate?.showDatail(id)
     }
 }
