@@ -27,6 +27,7 @@ class ListProductCoordinator: BaseCoordinator {
 
 extension ListProductCoordinator: ListProductCoordinatorProtocol {
     func showDetail(_ id: Int) {
-        print("chamando Detail: \(id)")
+        let detail = DetailCoordinator(with: configuration, parentCoordinator: self)
+        detail.start()
     }
 }
