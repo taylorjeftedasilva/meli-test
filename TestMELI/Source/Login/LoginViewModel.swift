@@ -37,7 +37,6 @@ extension LoginViewModel: LoginViewModelProtocol {
     }
     
     private func login(_ email: String,_ password: String) {
-//        "emilys" "emilyspass"
         AuthService.shared.login(username: email, password: password) { [weak self] result in
             switch result {
             case .success:
