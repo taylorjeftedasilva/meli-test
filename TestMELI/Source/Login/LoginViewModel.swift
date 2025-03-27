@@ -31,6 +31,7 @@ extension LoginViewModel: LoginViewModelProtocol {
         guard let email = emailText, !email.isEmpty,
               let password = passwordText, !password.isEmpty else {
             delegate?.showAlert(title: "Erro", message: "Preencha todos os campos.")
+            complition(false)
             return
         }
         self.login(email, password, complition: complition)
@@ -48,14 +49,14 @@ extension LoginViewModel: LoginViewModelProtocol {
                 DispatchQueue.main.async {
                     self?.delegate?.showAlert(title: "Sem internet!", message: "Verifique sua conexão.")
                 }
-                complition(true)
+                complition(false)
             case .failure(let error):
                 let logger = Logger(subsystem: "com.testmeli.app", category: "login")
                 logger.info("Erro ao tentar logar: \(error)")
                 DispatchQueue.main.async {
                     self?.delegate?.showAlert(title: "Dados incorretos", message: "Por favor verifique os dados e tente novamente")
                 }
-                complition(true)
+                complition(false)
             }
         }
     }
