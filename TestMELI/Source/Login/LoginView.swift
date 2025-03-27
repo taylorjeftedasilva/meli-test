@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol LoginViewProtocol: AnyObject {
-    func handleLogin(emailText: String?, passwordText: String?) -> Void
+    func handleLogin(emailText: String?, passwordText: String?, complition: @escaping (Bool) -> Void) -> Void
 }
 
 class LoginView: UIView {
@@ -48,6 +48,12 @@ class LoginView: UIView {
         return button
     }()
     
+    let activityIndicator: UIActivityIndicatorView = {
+        let view =  UIActivityIndicatorView(style: .medium)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Login"
@@ -74,9 +80,11 @@ extension LoginView: UIConfigurations {
     func setupConfigurations() {
         self.backgroundColor = TestMELIColors().getColor(.amarelo)
 //        emailTextField.becomeFirstResponder()
+        activityIndicator.hidesWhenStopped = true
     }
     
     func setupHierarchy() {
+        loginButton.addSubview(activityIndicator)
         self.addSubview(titleLabel)
         self.addSubview(emailTextField)
         self.addSubview(passwordTextField)
@@ -105,7 +113,10 @@ extension LoginView: UIConfigurations {
             loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 30),
             loginButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             loginButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            loginButton.heightAnchor.constraint(equalToConstant: 50)
+            loginButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: loginButton.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: loginButton.centerYAnchor)
         ])
     }
 }
@@ -113,6 +124,21 @@ extension LoginView: UIConfigurations {
 // MARK: - Actions
 extension LoginView {
     @objc private func handleLogin() {
-        delegate?.handleLogin(emailText: emailTextField.text, passwordText: passwordTextField.text)
+        showLoading(true)
+        delegate?.handleLogin(emailText: emailTextField.text, passwordText: passwordTextField.text) { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.showLoading(false)
+            }
+        }
+    }
+    
+    func showLoading(_ loading: Bool) {
+        if loading {
+            loginButton.setTitle("", for: .normal)
+            activityIndicator.startAnimating()
+        } else {
+            loginButton.setTitle("Entrar", for: .normal)
+            activityIndicator.stopAnimating()
+        }
     }
 }

@@ -31,8 +31,8 @@ class LoginViewController: CoordinatorViewController {
 // MARK: - Actions
 extension LoginViewController: LoginViewProtocol {
     
-    func handleLogin(emailText: String?, passwordText: String?) {
-        viewModel.handleLogin(email: emailText, password: passwordText)
+    func handleLogin(emailText: String?, passwordText: String?, complition: @escaping (Bool) -> Void) {
+        viewModel.handleLogin(email: emailText, password: passwordText, complition: complition)
     }
 }
 
