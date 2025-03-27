@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol LoginViewProtocol: AnyObject {
-    func handleLogin(emailText: String?, passwordText: String?, complition: @escaping (Bool) -> Void) -> Void
+    func handleLogin(emailText: String?, passwordText: String?, completion: @escaping (Bool) -> Void) -> Void
 }
 
 class LoginView: UIView {

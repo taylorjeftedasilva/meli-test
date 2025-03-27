@@ -16,7 +16,7 @@ struct LoginResponse: Decodable {
 }
 
 protocol LoginViewModelProtocol: AnyObject {
-    func handleLogin(email emailText: String?, password passwordText: String?, complition: @escaping (Bool) -> Void) -> Void
+    func handleLogin(email emailText: String?, password passwordText: String?, completion: @escaping (Bool) -> Void) -> Void
 }
 
 class LoginViewModel {
@@ -27,14 +27,14 @@ class LoginViewModel {
 
 extension LoginViewModel: LoginViewModelProtocol {
     
-    func handleLogin(email emailText: String?, password passwordText: String?, complition: @escaping (Bool) -> Void) {
+    func handleLogin(email emailText: String?, password passwordText: String?, completion: @escaping (Bool) -> Void) {
         guard let email = emailText, !email.isEmpty,
               let password = passwordText, !password.isEmpty else {
             delegate?.showAlert(title: "Erro", message: "Preencha todos os campos.")
-            complition(false)
+            completion(false)
             return
         }
-        self.login(email, password, complition: complition)
+        self.login(email, password, complition: completion)
     }
     
     private func login(_ email: String,_ password: String, complition: @escaping (Bool) -> Void) {
