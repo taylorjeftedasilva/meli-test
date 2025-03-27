@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ListProductsServiceProtocol {
-    func fetchProducts<T: Decodable>(completion: @escaping (Result<T, APIError>) -> Void)
+    func fetchProducts(completion: @escaping (Result<ListProductsData, APIError>) -> Void)
 }
 
 class ListProductsService: ListProductsServiceProtocol {
@@ -19,7 +19,7 @@ class ListProductsService: ListProductsServiceProtocol {
         self.client = client
     }
     
-    func fetchProducts<T: Decodable>(completion: @escaping (Result<T, APIError>) -> Void) {
+    func fetchProducts(completion: @escaping (Result<ListProductsData, APIError>) -> Void) {
         client.request(endpoint: entrypoint,
                        method: .get,
                        body: nil,
