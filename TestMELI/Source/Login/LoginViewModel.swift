@@ -34,29 +34,29 @@ extension LoginViewModel: LoginViewModelProtocol {
             completion(false)
             return
         }
-        self.login(email, password, complition: completion)
+        self.login(email, password, completion: completion)
     }
     
-    private func login(_ email: String,_ password: String, complition: @escaping (Bool) -> Void) {
+    private func login(_ email: String,_ password: String, completion: @escaping (Bool) -> Void) {
         AuthService.shared.login(username: email, password: password) { [weak self] result in
             switch result {
             case .success:
                 DispatchQueue.main.async {
                     self?.delegate?.showListProducts()
                 }
-                complition(true)
+                completion(true)
             case .failure(.noInternetConnection):
                 DispatchQueue.main.async {
                     self?.delegate?.showAlert(title: "Sem internet!", message: "Verifique sua conexão.")
                 }
-                complition(false)
+                completion(false)
             case .failure(let error):
                 let logger = Logger(subsystem: "com.testmeli.app", category: "login")
                 logger.info("Erro ao tentar logar: \(error)")
                 DispatchQueue.main.async {
                     self?.delegate?.showAlert(title: "Dados incorretos", message: "Por favor verifique os dados e tente novamente")
                 }
-                complition(false)
+                completion(false)
             }
         }
     }
