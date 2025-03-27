@@ -7,7 +7,7 @@
 
 class DetailCoordinator: BaseCoordinator {
     
-    var productSearch: String? = nil
+    var productID: String? = nil
     
     override func start() {
         let viewModel = DetailViewModel()

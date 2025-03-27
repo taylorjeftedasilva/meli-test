@@ -21,6 +21,6 @@ class DetailViewController: CoordinatorViewController {
     }
     
     override func viewDidLoad() {
-        self.view.backgroundColor = .yellow
+        self.view.backgroundColor = .green
     }
 }
