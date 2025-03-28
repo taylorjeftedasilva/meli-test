@@ -36,7 +36,6 @@ class DetailProductViewController: CoordinatorViewController {
 extension DetailProductViewController: UIConfigurations {
 
     func setupConfigurations() {
-//        listProductsView.delegate = self
         viewModel.data.bind { [weak self] result in
             switch result {
             case .success(let product):
