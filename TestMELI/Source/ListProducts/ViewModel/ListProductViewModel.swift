@@ -8,14 +8,14 @@
 import Foundation
 import UIKit
 
-enum Response {
-    case success(ProductResponse)
-    case failure(APIError)
-    case loading(Bool)
+protocol ListProductViewModelProtocol {
+    var data: Binding<Response<ProductResponse>> { get }
+    func fetchProdutos() -> Void
+    func fetchImage(url: String, completion: @escaping (UIImage?, String) -> Void) -> Void
 }
 
-class ListProductViewModel {
-    var data: Binding<Response> =  Binding(value: .loading(true))
+class ListProductViewModel: ListProductViewModelProtocol {
+    var data: Binding<Response<ProductResponse>> =  Binding(value: .loading(true))
     private let service: ListProductsServiceProtocol
     
     init(service: ListProductsServiceProtocol = ListProductsService()) {

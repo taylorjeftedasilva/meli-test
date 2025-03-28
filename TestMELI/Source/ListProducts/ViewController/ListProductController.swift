@@ -75,7 +75,8 @@ extension ListProductController: UIConfigurations {
 extension ListProductController {
     func setupNavigationController() {
         DispatchQueue.main.async { [weak self] in
-            self?.navigationController?.isNavigationBarHidden = true
+            self?.navigationController?.isNavigationBarHidden = false
+            self?.navigationItem.setHidesBackButton(true, animated: true)
         }
     }
 }

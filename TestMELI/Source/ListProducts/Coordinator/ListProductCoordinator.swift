@@ -21,13 +21,15 @@ class ListProductCoordinator: BaseCoordinator {
                                                       bundle: nil,
                                                       viewModel: viewModel)
         listProductsController.delegate = self
+        configuration.navigationController?.isNavigationBarHidden = true
         configuration.navigationController?.pushViewController(listProductsController, animated: true)
     }
 }
 
 extension ListProductCoordinator: ListProductCoordinatorProtocol {
     func showDetail(_ id: Int) {
-        let detail = DetailCoordinator(with: configuration, parentCoordinator: self)
+        let detail = DetailProductCoordinator(with: configuration, parentCoordinator: self)
+        detail.productID = id
         detail.start()
     }
 }
