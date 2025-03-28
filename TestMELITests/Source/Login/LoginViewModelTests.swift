@@ -30,22 +30,17 @@ class LoginViewModelTests: XCTestCase {
     
     func testHandleLogin_ShowsAlert_WhenEmailOrPasswordIsEmpty() {
         let expectation = self.expectation(description: "Alert is shown")
-        
         loginViewModel.handleLogin(email: "", password: "", completion: { success in
             XCTAssertFalse(success, "O login não deveria ser bem-sucedido se os campos estiverem vazios.")
             XCTAssertTrue(self.mockDelegate.didShowAlert, "Deveria mostrar um alerta quando os campos estiverem vazios.")
             expectation.fulfill()
         })
-        
         waitForExpectations(timeout: 1, handler: nil)
     }
     
     func testHandleLogin_ShowsAlert_WhenNoInternetConnection() {
-        // Configura o mock para simular uma falha de conexão
         mockAuthService.loginResult = .failure(.noInternetConnection)
-        
         let expectation = self.expectation(description: "Alert is shown")
-        
         loginViewModel.handleLogin(email: "test@example.com", password: "password", completion: { success in
             XCTAssertFalse(success, "O login não deveria ser bem-sucedido em caso de erro de conexão com a internet.")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -53,16 +48,12 @@ class LoginViewModelTests: XCTestCase {
                 expectation.fulfill()
             }
         })
-        
         waitForExpectations(timeout: 1, handler: nil)
     }
     
     func testHandleLogin_ShowsAlert_WhenCredentialsAreIncorrect() {
-        // Configura o mock para simular erro de credenciais incorretas
         mockAuthService.loginResult = .failure(.unauthorized)
-        
         let expectation = self.expectation(description: "Alert is shown")
-        
         loginViewModel.handleLogin(email: "wrong@example.com", password: "wrongPassword", completion: { success in
             XCTAssertFalse(success, "O login não deveria ser bem-sucedido com dados incorretos.")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -70,16 +61,12 @@ class LoginViewModelTests: XCTestCase {
                 expectation.fulfill()
             }
         })
-        
         waitForExpectations(timeout: 1, handler: nil)
     }
     
     func testHandleLogin_ShowsListProducts_WhenLoginIsSuccessful() {
-        // Configura o mock para simular um login bem-sucedido
         mockAuthService.loginResult = .success(true)
-        
         let expectation = self.expectation(description: "showListProducts is called")
-        
         loginViewModel.handleLogin(email: "test@example.com", password: "password", completion: { success in
             XCTAssertTrue(success, "O login deveria ser bem-sucedido com credenciais válidas.")
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -87,7 +74,6 @@ class LoginViewModelTests: XCTestCase {
                 expectation.fulfill()
             }
         })
-        
         waitForExpectations(timeout: 1, handler: nil)
     }
 }

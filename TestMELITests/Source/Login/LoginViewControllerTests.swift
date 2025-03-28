@@ -23,11 +23,7 @@ class LoginViewControllerTests: XCTestCase {
         mockWindow = UIWindow()
         mockConfiguration = MockCoordinatorConfiguration(window: mockWindow)
         mockCoordinator = MockBaseCoordinator(with: mockConfiguration)
-        
         loginViewController = LoginViewController(coordinator: mockCoordinator, viewModel: mockViewModel)
-        
-        // Carregar a view para inicializar os componentes da interface
-        loginViewController.loadViewIfNeeded()
     }
     
     override func tearDown() {
