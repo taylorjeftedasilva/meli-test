@@ -28,8 +28,6 @@ class SplashViewControllerTests: XCTestCase {
                                                     nibName: nil,
                                                     bundle: nil)
         splashViewController.delegate = mockDelegate
-        
-        // Garante que a view foi carregada
         _ = splashViewController.view
     }
     
