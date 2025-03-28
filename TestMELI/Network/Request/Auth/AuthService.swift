@@ -7,9 +7,12 @@
 
 import Foundation
 
-import Foundation
+protocol AuthServiceProtocol: AnyObject {
+    func login(username: String, password: String, completion: @escaping (Result<Bool, APIError>) -> Void)
+    func refreshToken(completion: @escaping (Result<Bool, APIError>) -> Void)
+}
 
-class AuthService {
+class AuthService: AuthServiceProtocol {
     
     static let shared = AuthService()
     private let tokenManager: TokenManagerProtocol

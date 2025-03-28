@@ -1,6 +1,6 @@
 //
 //  LoginCoordinator.swift
-//  MarketplaceDelivery
+//  TestMELI
 //
 //  Created by Taylor Jefte da silva on 25/03/25.
 //
@@ -13,7 +13,11 @@ protocol LoginCoordinatorProtocol: AnyObject {
     func showListProducts() -> Void
 }
 
-class LoginCoordinator: BaseCoordinator {
+protocol LoginCoordinatorStarterProtocol {
+    func start() -> Void
+}
+
+class LoginCoordinator: BaseCoordinator, LoginCoordinatorStarterProtocol {
     
     override func start() {
         guard let window = configuration.window else {
