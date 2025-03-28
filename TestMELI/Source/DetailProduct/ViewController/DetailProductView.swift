@@ -64,13 +64,22 @@ final class DetailProductView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private var thumbnail: String?
+    
     func configure(product: DetailProductResponse) {
         titleLabel.text = product.title
         descriptionLabel.text = product.description
         categoryLabel.text = product.category
         priceLabel.text = "$\(product.price)"
-        if let url = URL(string: product.thumbnail), let data = try? Data(contentsOf: url) {
-            thumbnailImageView.image = UIImage(data: data)
+        thumbnail = product.thumbnail
+
+        ImageLoader.shared.loadImage(from: product.thumbnail) { [weak self] image, url in
+            guard let self = self else { return }
+            if self.thumbnail == url {
+                DispatchQueue.main.async {
+                    self.thumbnailImageView.image = image
+                }
+            }
         }
     }
     

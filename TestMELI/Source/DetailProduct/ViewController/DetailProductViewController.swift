@@ -37,24 +37,24 @@ extension DetailProductViewController: UIConfigurations {
 
     func setupConfigurations() {
 //        listProductsView.delegate = self
-//        viewModel.data.bind { [weak self] result in
-//            switch result {
-//            case .success(let products):
-//                self?.listProductsView.setProductDataSource(products: products)
-//                DispatchQueue.main.async {
-//                    self?.stopLoading()
-//                }
-//            case .failure(_):
-//                DispatchQueue.main.async {
-//                    self?.stopLoading()
-//                }
-//            case .loading(_):
-//                DispatchQueue.main.async {
-//                    self?.startLoading()
-//                }
-//            }
-//        }
-//        self.viewModel.fetchProdutos()
+        viewModel.data.bind { [weak self] result in
+            switch result {
+            case .success(let product):
+                DispatchQueue.main.async {
+                    self?.detailProductView.configure(product: product)
+                    self?.stopLoading()
+                }
+            case .failure(_):
+                DispatchQueue.main.async {
+                    self?.stopLoading()
+                }
+            case .loading(_):
+                DispatchQueue.main.async {
+                    self?.startLoading()
+                }
+            }
+        }
+        self.viewModel.fetchProduto()
     }
 
     func setupHierarchy() {

@@ -22,7 +22,7 @@ struct DetailProductResponse {
         self.thumbnail = thumbnail
     }
     
-    init(data: ProductData) {
+    init(data: DetailProductData) {
         self.id = data.id
         self.title = data.title
         self.description = data.description
