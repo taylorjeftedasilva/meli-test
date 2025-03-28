@@ -1,6 +1,6 @@
 //
 //  SplashViewController.swift
-//  MarketplaceDelivery
+//  TestMELI
 //
 //  Created by Taylor Jefte da silva on 25/03/25.
 //
@@ -23,8 +23,8 @@ class SplashViewController: CoordinatorViewController {
 extension SplashViewController: SplashViewProtocol {
     
     func animationCompletion() {
-        DispatchQueue.main.asyncAfter(deadline: .now(), execute: { [unowned self] in
-            self.delegate?.startLogin()
+        DispatchQueue.main.asyncAfter(deadline: .now(), execute: { [weak self] in
+            self?.delegate?.startLogin()
         })
     }
 }

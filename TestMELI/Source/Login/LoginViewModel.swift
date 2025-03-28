@@ -1,6 +1,6 @@
 //
 //  LoginViewModel.swift
-//  MarketplaceDelivery
+//  TestMELI
 //
 //  Created by Taylor Jefte da silva on 25/03/25.
 //
@@ -22,6 +22,12 @@ protocol LoginViewModelProtocol: AnyObject {
 class LoginViewModel {
     
     weak var delegate: LoginCoordinatorProtocol?
+    private let serviceAuth: AuthServiceProtocol
+    
+    init(delegate: LoginCoordinatorProtocol? = nil, serviceAuth: AuthServiceProtocol = AuthService.shared) {
+        self.delegate = delegate
+        self.serviceAuth = serviceAuth
+    }
 }
 
 
@@ -38,7 +44,7 @@ extension LoginViewModel: LoginViewModelProtocol {
     }
     
     private func login(_ email: String,_ password: String, completion: @escaping (Bool) -> Void) {
-        AuthService.shared.login(username: email, password: password) { [weak self] result in
+        serviceAuth.login(username: email, password: password) { [weak self] result in
             switch result {
             case .success:
                 DispatchQueue.main.async {
