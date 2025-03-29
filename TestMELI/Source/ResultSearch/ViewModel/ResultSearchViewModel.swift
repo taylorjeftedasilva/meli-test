@@ -33,7 +33,6 @@ class ResultSearchViewModel: ResultSearchViewModelProtocol {
             case .failure(let error):
                 self?.data.value = .failure(error)
             }
-            
         }
     }
     
