@@ -20,10 +20,19 @@ class ListProductDatasource: NSObject, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ProductCell", for: indexPath) as? ProductCell
-        guard let product = produtos?.products[indexPath.row] else { return UITableViewCell() }
-        cell?.configure(with: product)
-        return cell ?? UITableViewCell()
+        if indexPath.row < produtos?.products.count ?? 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ProductCell", for: indexPath) as? ProductCell
+            guard let product = produtos?.products[indexPath.row] else { return UITableViewCell() }
+            cell?.configure(with: product)
+            return cell ?? UITableViewCell()
+        } else {
+            let cell = UITableViewCell(style: .default, reuseIdentifier: "LoadingCell")
+            let spinner = UIActivityIndicatorView(style: .medium)
+            spinner.startAnimating()
+            spinner.center = cell.contentView.center
+            cell.contentView.addSubview(spinner)
+            return cell
+        }
     }
     
     func getProductID(index: Int) -> Int {
