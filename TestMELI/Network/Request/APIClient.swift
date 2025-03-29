@@ -16,6 +16,7 @@ protocol APIClientProtocol {
         requiresAuth: Bool,
         completion: @escaping (Result<T, APIError>) -> Void
     ) -> URLSessionDataTask?
+    func cancelRequest() -> Void
 }
 
 enum HTTPMethod: String {
@@ -37,8 +38,6 @@ class APIClient: APIClientProtocol {
     private let tokenManager: TokenManagerProtocol
     private let authService: AuthService
     private let logger = Logger(subsystem: "com.testmeli.app", category: "Networking")
-
-    // Armazena a task para permitir o cancelamento
     private var currentTask: URLSessionDataTask?
 
     private init(tokenManager: TokenManagerProtocol = TokenManager.shared, authService: AuthService = AuthService.shared) {
@@ -52,7 +51,7 @@ class APIClient: APIClientProtocol {
         body: [String : Any]? = nil,
         requiresAuth: Bool = true,
         completion: @escaping (Result<T, APIError>) -> Void
-    ) -> URLSessionDataTask? { // Retorna a task para permitir cancelamento
+    ) -> URLSessionDataTask? {
         logger.info("Iniciando requisição para \(endpoint) com método \(method.rawValue)")
         
         guard let url = URL(string: endpoint) else {
@@ -98,7 +97,7 @@ class APIClient: APIClientProtocol {
             
             if let error = error as NSError?, error.code == NSURLErrorCancelled {
                 self.logger.info("Requisição cancelada")
-                return // Apenas saímos da função, sem chamar completion
+                return
             }
 
             if let error = error {
@@ -163,7 +162,6 @@ class APIClient: APIClientProtocol {
         return performRequest(request: newRequest, completion: completion)
     }
     
-    // Método para cancelar a requisição atual
     func cancelRequest() {
         currentTask?.cancel()
         logger.info("Requisição cancelada pelo usuário")

@@ -9,6 +9,7 @@ import Foundation
 
 protocol DetailProductServiceProtocol {
     func fetchProduct(productID: Int, completion: @escaping (Result<DetailProductData, APIError>) -> Void) -> URLSessionDataTask?
+    func cancelRequest() -> Void
 }
 
 class DetailProductService: DetailProductServiceProtocol {
@@ -25,5 +26,9 @@ class DetailProductService: DetailProductServiceProtocol {
                        body: nil,
                        requiresAuth: false,
                        completion: completion)
+    }
+    
+    func cancelRequest() {
+        client.cancelRequest()
     }
 }

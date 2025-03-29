@@ -16,7 +16,6 @@ protocol ListProductViewModelProtocol {
 
 class ListProductViewModel: ListProductViewModelProtocol {
     var data: Binding<Response<ProductResponse>> =  Binding(value: .loading(true))
-    private var currentTask: URLSessionDataTask?
     private let service: ListProductsServiceProtocol
     
     init(service: ListProductsServiceProtocol = ListProductsService()) {
@@ -25,8 +24,8 @@ class ListProductViewModel: ListProductViewModelProtocol {
     
     func fetchProdutos() {
         self.data.value = .loading(true)
-        currentTask?.cancel()
-        currentTask = service.fetchProducts { [weak self]  result in
+        service.cancelRequest()
+        service.fetchProducts { [weak self]  result in
             switch result {
             case .success(let data):
                 self?.data.value = .success(ProductResponse(data: data))
@@ -39,7 +38,7 @@ class ListProductViewModel: ListProductViewModelProtocol {
     }
     
     func cancelFetch() {
-        currentTask?.cancel()
+        service.cancelRequest()
     }
     
     func fetchImage(url: String, completion: @escaping (UIImage?, String) -> Void) {

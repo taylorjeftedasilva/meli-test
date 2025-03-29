@@ -17,7 +17,6 @@ class DetailProductViewModel: DetailProductViewModelProtocol {
     
     var data: Binding<Response<DetailProductResponse>> =  Binding(value: .loading(true))
     private let service: DetailProductServiceProtocol
-    private var currentTask: URLSessionDataTask?
     private let detailID: Int
     
     init(id: Int, service: DetailProductServiceProtocol = DetailProductService()) {
@@ -27,8 +26,8 @@ class DetailProductViewModel: DetailProductViewModelProtocol {
     
     func fetchProduct() {
         self.data.value = .loading(true)
-        currentTask?.cancel()
-        currentTask = service.fetchProduct(productID: detailID) { [weak self] result in
+        service.cancelRequest()
+        service.fetchProduct(productID: detailID) { [weak self] result in
             switch result {
             case .success(let data):
                 self?.data.value = .success(DetailProductResponse(data: data))
@@ -41,6 +40,6 @@ class DetailProductViewModel: DetailProductViewModelProtocol {
     }
     
     func cancelFetch() {
-        currentTask?.cancel()
+        service.cancelRequest()
     }
 }
