@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ResultSearchServiceProtocol {
-    func fetchProducts(search: String, completion: @escaping (Result<ListResultSearchData, APIError>) -> Void)
+    func fetchProducts(search: String, completion: @escaping (Result<ListResultSearchData, APIError>) -> Void) -> URLSessionDataTask?
 }
 
 class ResultSearchService: ResultSearchServiceProtocol {
@@ -19,8 +19,8 @@ class ResultSearchService: ResultSearchServiceProtocol {
         self.client = client
     }
     
-    func fetchProducts(search: String, completion: @escaping (Result<ListResultSearchData, APIError>) -> Void) {
-        client.request(endpoint: "\(entrypoint)/search?q=\(search)",
+    func fetchProducts(search: String, completion: @escaping (Result<ListResultSearchData, APIError>) -> Void) -> URLSessionDataTask? {
+        return client.request(endpoint: "\(entrypoint)/search?q=\(search)",
                        method: .get,
                        body: nil,
                        requiresAuth: false,

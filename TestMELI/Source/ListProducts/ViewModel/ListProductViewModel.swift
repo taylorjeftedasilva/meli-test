@@ -11,11 +11,12 @@ import UIKit
 protocol ListProductViewModelProtocol {
     var data: Binding<Response<ProductResponse>> { get }
     func fetchProdutos() -> Void
-    func fetchImage(url: String, completion: @escaping (UIImage?, String) -> Void) -> Void
+    func cancelFetch() -> Void
 }
 
 class ListProductViewModel: ListProductViewModelProtocol {
     var data: Binding<Response<ProductResponse>> =  Binding(value: .loading(true))
+    private var currentTask: URLSessionDataTask?
     private let service: ListProductsServiceProtocol
     
     init(service: ListProductsServiceProtocol = ListProductsService()) {
@@ -24,7 +25,8 @@ class ListProductViewModel: ListProductViewModelProtocol {
     
     func fetchProdutos() {
         self.data.value = .loading(true)
-        service.fetchProducts { [weak self]  result in
+        currentTask?.cancel()
+        currentTask = service.fetchProducts { [weak self]  result in
             switch result {
             case .success(let data):
                 self?.data.value = .success(ProductResponse(data: data))
@@ -34,6 +36,10 @@ class ListProductViewModel: ListProductViewModelProtocol {
                 self?.data.value = .loading(false)
             }
         }
+    }
+    
+    func cancelFetch() {
+        currentTask?.cancel()
     }
     
     func fetchImage(url: String, completion: @escaping (UIImage?, String) -> Void) {

@@ -11,14 +11,15 @@ import UIKit
 protocol ResultSearchViewModelProtocol {
     var data: Binding<Response<ResultSearchResponse>> { get }
     func fetchProducts() -> Void
+    func cancelFetch() -> Void
     func getSearch() -> String
-    func fetchImage(url: String, completion: @escaping (UIImage?, String) -> Void) -> Void
 }
 
 class ResultSearchViewModel: ResultSearchViewModelProtocol {
     
     var data: Binding<Response<ResultSearchResponse>> =  Binding(value: .loading(true))
     private let service: ResultSearchServiceProtocol
+    private var currentTask: URLSessionDataTask?
     private let search: String
     
     init(search: String, service: ResultSearchServiceProtocol = ResultSearchService()) {
@@ -28,7 +29,8 @@ class ResultSearchViewModel: ResultSearchViewModelProtocol {
     
     func fetchProducts() {
         self.data.value = .loading(true)
-        service.fetchProducts(search: search) { [weak self] result in
+        currentTask?.cancel()
+        currentTask = service.fetchProducts(search: search) { [weak self] result in
             switch result {
             case .success(let data):
                 self?.data.value = .success(ResultSearchResponse(data: data))
@@ -40,10 +42,8 @@ class ResultSearchViewModel: ResultSearchViewModelProtocol {
         }
     }
     
-    func fetchImage(url: String, completion: @escaping (UIImage?, String) -> Void) {
-        ImageLoader.shared.loadImage(from: url) { image, url in
-            completion(image, url)
-        }
+    func cancelFetch() {
+        currentTask?.cancel()
     }
     
     func getSearch() -> String {
