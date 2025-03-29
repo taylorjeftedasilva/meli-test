@@ -8,20 +8,20 @@
 import Foundation
 
 protocol ListProductsServiceProtocol {
-    func fetchProducts(completion: @escaping (Result<ListProductsData, APIError>) -> Void)
+    func fetchProducts(offset: Int, limit: Int, completion: @escaping (Result<ListProductsData, APIError>) -> Void)
     func cancelRequest() -> Void
 }
 
 class ListProductsService: ListProductsServiceProtocol {
     private let client : APIClientProtocol
-    private let entrypoint = LocalizedString.baseURL.value + "products?limit=0"
+    private let entrypoint = LocalizedString.baseURL.value + "products"
     
     init(client: APIClientProtocol = APIClient.shared) {
         self.client = client
     }
     
-    func fetchProducts(completion: @escaping (Result<ListProductsData, APIError>) -> Void) {
-        client.request(endpoint: entrypoint,
+    func fetchProducts(offset: Int, limit: Int, completion: @escaping (Result<ListProductsData, APIError>) -> Void) {
+        client.request(endpoint: "\(entrypoint)/?limit=\(limit)&skip=\(offset)",
                        method: .get,
                        body: nil,
                        requiresAuth: false,

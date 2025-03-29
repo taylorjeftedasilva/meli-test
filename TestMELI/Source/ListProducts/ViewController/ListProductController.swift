@@ -49,7 +49,7 @@ extension ListProductController: UIConfigurations {
             case .failure(let error):
                 DispatchQueue.main.async {
                     self?.delegate?.showError(error,
-                                              retryAgain: self?.viewModel.fetchProdutos)
+                                              retryAgain: self?.viewModel.fetchProducts)
                 }
             case .loading(let loading):
                 DispatchQueue.main.async {
@@ -57,7 +57,7 @@ extension ListProductController: UIConfigurations {
                 }
             }
         }
-        self.viewModel.fetchProdutos()
+        self.viewModel.fetchProducts()
         self.listProductsView.configureSearchBar(delegate: self)
     }
     
@@ -84,6 +84,14 @@ extension ListProductController {
 }
 
 extension ListProductController: ListProductViewProtocol {
+    func fetchProdutos(isLoadMore: Bool) {
+        viewModel.fetchProducts(isLoadMore: isLoadMore)
+    }
+    
+    func loadMore() -> Bool {
+        viewModel.loadMore()
+    }
+    
     func showDatail(_ id: Int) {
         delegate?.showDetail(id)
     }
