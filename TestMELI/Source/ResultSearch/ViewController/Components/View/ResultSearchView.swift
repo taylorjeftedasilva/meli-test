@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol ListProductViewProtocol: AnyObject {
+protocol ResultSearchViewProtocol: AnyObject {
     func showDatail(_ id: Int) -> Void
 }
 
-class ListProductView: UIView {
+class ResultSearchView: UIView {
     
     private lazy var searchBar: UISearchBar = {
         let view = UISearchBar()
@@ -36,9 +36,9 @@ class ListProductView: UIView {
         return view
     }()
 
-    private let dataSource = ListProductDatasource()
-    private let tableDelegate = ListProductDelegate()
-    weak var delegate: ListProductViewProtocol? = nil
+    private let dataSource = ResultSearchDatasource()
+    private let tableDelegate = ResultSearchDelegate()
+    weak var delegate: ResultSearchViewProtocol? = nil
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,7 +49,7 @@ class ListProductView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setProductDataSource(products: ProductResponse) {
+    func setProductDataSource(products: ResultSearchResponse) {
         dataSource.update(produtos: products)
         DispatchQueue.main.async { [weak self] in
             self?.tableView.reloadData()
@@ -57,13 +57,13 @@ class ListProductView: UIView {
     }
 }
 
-extension ListProductView: UIConfigurations {
+extension ResultSearchView: UIConfigurations {
     
     func setupConfigurations() {
         tableDelegate.delegate = self
         tableView.dataSource = dataSource
         tableView.delegate = tableDelegate
-        tableView.register(ProductCell.self, forCellReuseIdentifier: "ProductCell")
+        tableView.register(ResultSearchCell.self, forCellReuseIdentifier: "ResultSearchCell")
         tableView.estimatedRowHeight = 150
     }
     
@@ -91,7 +91,7 @@ extension ListProductView: UIConfigurations {
     }
 }
 
-extension ListProductView {
+extension ResultSearchView {
     
     @objc func handleTableViewTap() {
         searchBar.endEditing(true)
@@ -99,7 +99,7 @@ extension ListProductView {
     }
 }
 
-extension ListProductView: UISearchBarDelegate {
+extension ResultSearchView: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         showOverlay()
     }
@@ -115,13 +115,9 @@ extension ListProductView: UISearchBarDelegate {
     private func hideOverlay() {
         overlayView.isHidden = true
     }
-    
-    func configureSearchBar(delegate: UISearchBarDelegate) {
-        searchBar.delegate = delegate
-    }
 }
 
-extension ListProductView: ListProductDelegateProtocol {
+extension ResultSearchView: ResultSearchDelegateProtocol {
     func showDetailProduct(index: Int) {
         let id = dataSource.getProductID(index: index)
         delegate?.showDatail(id)
