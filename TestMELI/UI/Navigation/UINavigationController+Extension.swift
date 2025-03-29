@@ -7,13 +7,30 @@
 
 import UIKit
 
-extension UINavigationController {
+extension CoordinatorViewController {
     
     func setupNavigationControllerColor(color: TestMELIColors.Colors = .amarelo) {
-        self.navigationBar.isTranslucent = false
-        let backButtonImage = UIImage(systemName: "arrow.left")?.withRenderingMode(.alwaysTemplate)
-        let backButton = UIBarButtonItem(image: backButtonImage, style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem = backButton
-        self.navigationBar.tintColor = .white
+        guard let navigationController = self.navigationController else { return }
+        navigationController.navigationBar.isTranslucent = false
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = TestMELIColors().getColor(color)
+        appearance.shadowColor = .clear
+        navigationController.navigationBar.standardAppearance = appearance
+        navigationController.navigationBar.scrollEdgeAppearance = appearance
+        let backButtonImage = UIImage(systemName: "arrow.left")?.applyingSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 24, weight: .bold))
+
+        let backButton = UIButton(type: .system)
+        backButton.setImage(backButtonImage, for: .normal)
+        backButton.tintColor = .white
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        let customBackButton = UIBarButtonItem(customView: backButton)
+        navigationItem.leftBarButtonItem = customBackButton
+    }
+    
+    @objc func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }
+
+

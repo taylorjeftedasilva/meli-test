@@ -11,6 +11,7 @@ class DetailProductViewController: CoordinatorViewController {
     
     private let viewModel: DetailProductViewModel
     private let detailProductView: DetailProductView = DetailProductView()
+    weak var delegate: DetailProductCoordinatorProtocol? = nil
     
     init(coordinator: CoordinatorProtocol, nibName: String? = nil, bundle: Bundle? = nil, viewModel: DetailProductViewModel) {
         self.viewModel  = viewModel
@@ -23,12 +24,13 @@ class DetailProductViewController: CoordinatorViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.hidesBackButton = true
         setup()
+        setupNavigationController()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavigationController()
     }
 }
 
@@ -43,9 +45,10 @@ extension DetailProductViewController: UIConfigurations {
                     self?.detailProductView.configure(product: product)
                     self?.stopLoading()
                 }
-            case .failure(_):
+            case .failure(let error):
                 DispatchQueue.main.async {
-                    self?.stopLoading()
+                    self?.delegate?.showError(error,
+                                              retryAgain: self?.viewModel.fetchProduct)
                 }
             case .loading(_):
                 DispatchQueue.main.async {
@@ -53,7 +56,7 @@ extension DetailProductViewController: UIConfigurations {
                 }
             }
         }
-        self.viewModel.fetchProduto()
+        self.viewModel.fetchProduct()
     }
 
     func setupHierarchy() {
@@ -73,7 +76,7 @@ extension DetailProductViewController {
     func setupNavigationController() {
         DispatchQueue.main.async { [weak self] in
             self?.navigationController?.isNavigationBarHidden = false
-            self?.navigationController?.setupNavigationControllerColor()
+            self?.setupNavigationControllerColor()
         }
     }
 }
