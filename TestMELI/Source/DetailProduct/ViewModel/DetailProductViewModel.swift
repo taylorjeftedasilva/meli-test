@@ -10,13 +10,12 @@ import UIKit
 protocol DetailProductViewModelProtocol {
     var data: Binding<Response<DetailProductResponse>> { get }
     func fetchProduct() -> Void
-    func fetchImage(url: String, completion: @escaping (UIImage?, String) -> Void) -> Void
+    func cancelFetch() -> Void
 }
 
 class DetailProductViewModel: DetailProductViewModelProtocol {
     
     var data: Binding<Response<DetailProductResponse>> =  Binding(value: .loading(true))
-    
     private let service: DetailProductServiceProtocol
     private let detailID: Int
     
@@ -26,6 +25,8 @@ class DetailProductViewModel: DetailProductViewModelProtocol {
     }
     
     func fetchProduct() {
+        self.data.value = .loading(true)
+        service.cancelRequest()
         service.fetchProduct(productID: detailID) { [weak self] result in
             switch result {
             case .success(let data):
@@ -38,9 +39,7 @@ class DetailProductViewModel: DetailProductViewModelProtocol {
         }
     }
     
-    func fetchImage(url: String, completion: @escaping (UIImage?, String) -> Void) {
-        ImageLoader.shared.loadImage(from: url) { image, url in
-            completion(image, url)
-        }
+    func cancelFetch() {
+        service.cancelRequest()
     }
 }

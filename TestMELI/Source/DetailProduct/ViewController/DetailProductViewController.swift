@@ -78,4 +78,9 @@ extension DetailProductViewController {
             self?.setupNavigationControllerColor()
         }
     }
+    
+    @objc override func backButtonTapped() {
+        viewModel.cancelFetch()
+        navigationController?.popViewController(animated: true)
+    }
 }

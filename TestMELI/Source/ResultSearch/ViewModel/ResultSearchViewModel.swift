@@ -11,8 +11,8 @@ import UIKit
 protocol ResultSearchViewModelProtocol {
     var data: Binding<Response<ResultSearchResponse>> { get }
     func fetchProducts() -> Void
+    func cancelFetch() -> Void
     func getSearch() -> String
-    func fetchImage(url: String, completion: @escaping (UIImage?, String) -> Void) -> Void
 }
 
 class ResultSearchViewModel: ResultSearchViewModelProtocol {
@@ -28,6 +28,7 @@ class ResultSearchViewModel: ResultSearchViewModelProtocol {
     
     func fetchProducts() {
         self.data.value = .loading(true)
+        service.cancelRequest()
         service.fetchProducts(search: search) { [weak self] result in
             switch result {
             case .success(let data):
@@ -40,10 +41,8 @@ class ResultSearchViewModel: ResultSearchViewModelProtocol {
         }
     }
     
-    func fetchImage(url: String, completion: @escaping (UIImage?, String) -> Void) {
-        ImageLoader.shared.loadImage(from: url) { image, url in
-            completion(image, url)
-        }
+    func cancelFetch() {
+        service.cancelRequest()
     }
     
     func getSearch() -> String {

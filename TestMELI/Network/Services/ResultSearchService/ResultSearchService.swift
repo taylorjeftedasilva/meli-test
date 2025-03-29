@@ -9,9 +9,11 @@ import Foundation
 
 protocol ResultSearchServiceProtocol {
     func fetchProducts(search: String, completion: @escaping (Result<ListResultSearchData, APIError>) -> Void)
+    func cancelRequest() -> Void
 }
 
 class ResultSearchService: ResultSearchServiceProtocol {
+    
     private let client : APIClientProtocol
     private let entrypoint = LocalizedString.baseURL.value + "products"
     
@@ -25,5 +27,9 @@ class ResultSearchService: ResultSearchServiceProtocol {
                        body: nil,
                        requiresAuth: false,
                        completion: completion)
+    }
+    
+    func cancelRequest() {
+        client.cancelRequest()
     }
 }
