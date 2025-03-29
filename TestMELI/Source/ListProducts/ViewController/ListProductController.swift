@@ -11,17 +11,14 @@ class ListProductController: CoordinatorViewController {
     
     private let listProductsView: ListProductView
     private let viewModel: ListProductViewModel
-    private let coordinatorDelegate: ListProductCoordinatorProtocol
     weak var delegate: ListProductCoordinatorProtocol? = nil
     
     init(coordinator: CoordinatorProtocol,
          nibName: String? = nil,
          bundle: Bundle? = nil,
-         viewModel: ListProductViewModel,
-         coordinatorDelegate: ListProductCoordinatorProtocol) {
+         viewModel: ListProductViewModel) {
         self.viewModel  = viewModel
         self.listProductsView = ListProductView()
-        self.coordinatorDelegate = coordinatorDelegate
         super.init(coordinator: coordinator, nibName: nibName, bundle: bundle)
     }
     
@@ -52,9 +49,10 @@ extension ListProductController: UIConfigurations {
                 DispatchQueue.main.async {
                     self?.stopLoading()
                 }
-            case .failure(_):
+            case .failure(let error):
                 DispatchQueue.main.async {
-                    self?.stopLoading()
+                    self?.delegate?.showError(error,
+                                              retryAgain: self?.viewModel.fetchProdutos)
                 }
             case .loading(_):
                 DispatchQueue.main.async {
@@ -98,6 +96,6 @@ extension ListProductController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text, !searchText.isEmpty else { return }
         searchBar.resignFirstResponder()
-        coordinatorDelegate.showResultSearch(search: searchText)
+        delegate?.showResultSearch(search: searchText)
     }
 }

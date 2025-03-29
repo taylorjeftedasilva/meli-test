@@ -26,12 +26,12 @@ class ResultSearchViewModel: ResultSearchViewModelProtocol {
     }
     
     func fetchProdutos() {
-        service.fetchProducts(search: search) { result in
+        service.fetchProducts(search: search) { [weak self] result in
             switch result {
             case .success(let data):
-                self.data.value = .success(ResultSearchResponse(data: data))
+                self?.data.value = .success(ResultSearchResponse(data: data))
             case .failure(let error):
-                self.data.value = .failure(error)
+                self?.data.value = .failure(error)
             }
         }
     }
