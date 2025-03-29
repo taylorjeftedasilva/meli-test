@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DetailProductServiceProtocol {
-    func fetchProduct(productID: Int, completion: @escaping (Result<DetailProductData, APIError>) -> Void) -> URLSessionDataTask?
+    func fetchProduct(productID: Int, completion: @escaping (Result<DetailProductData, APIError>) -> Void)
     func cancelRequest() -> Void
 }
 
@@ -20,8 +20,8 @@ class DetailProductService: DetailProductServiceProtocol {
         self.client = client
     }
     
-    func fetchProduct(productID: Int, completion: @escaping (Result<DetailProductData, APIError>) -> Void) -> URLSessionDataTask? {
-        return client.request(endpoint: "\(entrypoint)/\(productID)",
+    func fetchProduct(productID: Int, completion: @escaping (Result<DetailProductData, APIError>) -> Void) {
+        client.request(endpoint: "\(entrypoint)/\(productID)",
                        method: .get,
                        body: nil,
                        requiresAuth: false,

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ListProductsServiceProtocol {
-    func fetchProducts(completion: @escaping (Result<ListProductsData, APIError>) -> Void) -> URLSessionDataTask?
+    func fetchProducts(completion: @escaping (Result<ListProductsData, APIError>) -> Void)
     func cancelRequest() -> Void
 }
 
@@ -20,7 +20,7 @@ class ListProductsService: ListProductsServiceProtocol {
         self.client = client
     }
     
-    func fetchProducts(completion: @escaping (Result<ListProductsData, APIError>) -> Void) -> URLSessionDataTask? {
+    func fetchProducts(completion: @escaping (Result<ListProductsData, APIError>) -> Void) {
         client.request(endpoint: entrypoint,
                        method: .get,
                        body: nil,

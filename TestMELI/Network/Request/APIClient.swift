@@ -15,7 +15,7 @@ protocol APIClientProtocol {
         body: [String: Any]?,
         requiresAuth: Bool,
         completion: @escaping (Result<T, APIError>) -> Void
-    ) -> URLSessionDataTask?
+    )
     func cancelRequest() -> Void
 }
 
@@ -51,13 +51,13 @@ class APIClient: APIClientProtocol {
         body: [String : Any]? = nil,
         requiresAuth: Bool = true,
         completion: @escaping (Result<T, APIError>) -> Void
-    ) -> URLSessionDataTask? {
+    ) {
         logger.info("Iniciando requisição para \(endpoint) com método \(method.rawValue)")
         
         guard let url = URL(string: endpoint) else {
             logger.error("Erro: URL inválida - \(endpoint)")
             completion(.failure(.invalidURL))
-            return nil
+            return
         }
         
         var request = URLRequest(url: url)
@@ -71,7 +71,7 @@ class APIClient: APIClientProtocol {
             } catch {
                 logger.error("Erro ao serializar body: \(error.localizedDescription)")
                 completion(.failure(.decodingError))
-                return nil
+                return
             }
         }
         
@@ -80,12 +80,10 @@ class APIClient: APIClientProtocol {
             logger.info("Token de autenticação adicionado ao header")
         }
         
-        let task = performRequest(request: request, completion: completion)
-        currentTask = task
-        return task
+        performRequest(request: request, completion: completion)
     }
     
-    private func performRequest<T: Decodable>(request: URLRequest, completion: @escaping (Result<T, APIError>) -> Void) -> URLSessionDataTask {
+    private func performRequest<T: Decodable>(request: URLRequest, completion: @escaping (Result<T, APIError>) -> Void) {
         logger.info("Enviando requisição para \(request.url?.absoluteString ?? "URL desconhecida")")
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -149,17 +147,16 @@ class APIClient: APIClientProtocol {
         }
         
         task.resume()
-        return task
     }
     
-    private func retryRequest<T: Decodable>(request: URLRequest, completion: @escaping (Result<T, APIError>) -> Void) -> URLSessionDataTask {
+    private func retryRequest<T: Decodable>(request: URLRequest, completion: @escaping (Result<T, APIError>) -> Void) {
         var newRequest = request
         if let token = tokenManager.getToken() {
             newRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
         logger.info("Reexecutando requisição após refresh token")
-        return performRequest(request: newRequest, completion: completion)
+        performRequest(request: newRequest, completion: completion)
     }
     
     func cancelRequest() {
