@@ -1,8 +1,8 @@
 //
-//  ListProductDelegate.swift
+//  ResultSearchDelegate.swift
 //  TestMELI
 //
-//  Created by Taylor Jefte da silva on 26/03/25.
+//  Created by Taylor Jefte da silva on 28/03/25.
 //
 
 import UIKit
