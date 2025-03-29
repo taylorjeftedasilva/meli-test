@@ -6,12 +6,11 @@
 //
 
 import UIKit
-
 class ErrorViewController: CoordinatorViewController {
     
     private let errorView: ErrorView
     private let viewModel: ErrorViewModel
-    weak var delegate: ResultSearchCoordinatorProtocol? = nil
+    weak var delegate: ErrorCoordinatorProtocol? = nil
     
     init(coordinator: CoordinatorProtocol, nibName: String? = nil, bundle: Bundle? = nil, viewModel: ErrorViewModel) {
         self.viewModel  = viewModel
@@ -38,7 +37,7 @@ class ErrorViewController: CoordinatorViewController {
 extension ErrorViewController: UIConfigurations {
     
     func setupConfigurations() {
-//        errorView.delegate = self
+        errorView.delegate = self
         viewModel.data.bind { [weak self] result in
             switch result {
             case .success(let error):
@@ -79,9 +78,13 @@ extension ErrorViewController {
         }
     }
 }
-//
-//extension ResultSearchController: ResultSearchViewProtocol {
-//    func showDatail(_ id: Int) {
-//        delegate?.showDetail(id)
-//    }
-//}
+
+extension ErrorViewController: ErrorViewProtocol {
+    func tappedCloseButton() {
+        delegate?.close()
+    }
+    
+    func tappedRetryButton() {
+        delegate?.tryAgain()
+    }
+}

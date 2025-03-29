@@ -6,7 +6,7 @@
 //
 
 protocol ErrorCoordinatorProtocol: AnyObject {
-    func tryAgain(completion: @escaping () -> Void) -> Void
+    func tryAgain() -> Void
     func close() -> Void
 }
 
@@ -24,6 +24,8 @@ class ErrorCoordinator: BaseCoordinator {
     
     weak var delegate: ErrorCoordinatorProtocol? = nil
     var errorType: APIError? = nil
+    var closeAction: (() -> Void)? = nil
+    var tryAgainAction: (() -> Void)? = nil
     
     override func start() {
         guard let errorType = errorType else {
@@ -35,21 +37,21 @@ class ErrorCoordinator: BaseCoordinator {
                                                       nibName: nil,
                                                       bundle: nil,
                                                       viewModel: viewModel)
+        errorViewController.delegate = self
         errorViewController.modalPresentationStyle = .fullScreen
         configuration.navigationController?.present(errorViewController, animated: true)
     }
 }
 
-extension ErrorCoordinator {
+extension ErrorCoordinator: ErrorCoordinatorProtocol {
     
     func tryAgain() {
-        delegate?.tryAgain { [weak self] in
-            self?.start()
-        }
+        tryAgainAction?()
+        self.configuration.navigationController?.dismiss(animated: true)
     }
     
     func close() {
-        delegate?.close()
+        closeAction?()
         self.configuration.navigationController?.dismiss(animated: true)
     }
 }

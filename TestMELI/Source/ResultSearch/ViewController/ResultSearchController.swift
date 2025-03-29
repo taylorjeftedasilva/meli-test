@@ -48,8 +48,8 @@ extension ResultSearchController: UIConfigurations {
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self?.delegate?.showError(error)
-                    self?.stopLoading()
+                    self?.delegate?.showError(error,
+                                              retryAgain: self?.viewModel.fetchProdutos)
                 }
             case .loading(_):
                 DispatchQueue.main.async {
