@@ -44,21 +44,18 @@ extension ResultSearchController: UIConfigurations {
             case .success(let products):
                 guard let search = self?.viewModel.getSearch() else { return }
                 self?.resultSearchView.setProductDataSource(products: products, search: search)
-                DispatchQueue.main.async {
-                    self?.stopLoading()
-                }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self?.delegate?.showError(error,
-                                              retryAgain: self?.viewModel.fetchProdutos)
+                                              retryAgain: self?.viewModel.fetchProducts)
                 }
-            case .loading(_):
+            case .loading(let loading):
                 DispatchQueue.main.async {
-                    self?.startLoading()
+                    loading ? self?.startLoading() : self?.stopLoading()
                 }
             }
         }
-        self.viewModel.fetchProdutos()
+        self.viewModel.fetchProducts()
     }
     
     func setupHierarchy() {
@@ -84,6 +81,11 @@ extension ResultSearchController {
 }
 
 extension ResultSearchController: ResultSearchViewProtocol {
+    
+    func reloadTableView() {
+        viewModel.fetchProducts()
+    }
+    
     func showDatail(_ id: Int) {
         delegate?.showDetail(id)
     }

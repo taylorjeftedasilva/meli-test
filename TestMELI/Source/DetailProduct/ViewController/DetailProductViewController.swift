@@ -43,16 +43,15 @@ extension DetailProductViewController: UIConfigurations {
             case .success(let product):
                 DispatchQueue.main.async {
                     self?.detailProductView.configure(product: product)
-                    self?.stopLoading()
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self?.delegate?.showError(error,
                                               retryAgain: self?.viewModel.fetchProduct)
                 }
-            case .loading(_):
+            case .loading(let loading):
                 DispatchQueue.main.async {
-                    self?.startLoading()
+                    loading ? self?.startLoading() : self?.stopLoading()
                 }
             }
         }

@@ -30,8 +30,10 @@ class DetailProductViewModel: DetailProductViewModelProtocol {
             switch result {
             case .success(let data):
                 self?.data.value = .success(DetailProductResponse(data: data))
+                self?.data.value = .loading(false)
             case .failure(let error):
                 self?.data.value = .failure(error)
+                self?.data.value = .loading(false)
             }
         }
     }
