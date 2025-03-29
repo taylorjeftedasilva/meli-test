@@ -9,12 +9,20 @@ import UIKit
 
 protocol ResultSearchViewProtocol: AnyObject {
     func showDatail(_ id: Int) -> Void
+    func reloadTableView() -> Void
 }
 
 class ResultSearchView: UIView {
     
     private lazy var tableView: UITableView = {
         let view = UITableView()
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .white
+        refreshControl.backgroundColor = TestMELIColors().getColor(.amarelo)
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        view.refreshControl = refreshControl
+        view.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        view.sectionHeaderTopPadding = 0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -44,7 +52,6 @@ class ResultSearchView: UIView {
 extension ResultSearchView: UIConfigurations {
     
     func setupConfigurations() {
-        tableView.backgroundColor = TestMELIColors().getColor(.amarelo)
         tableDelegate.delegate = self
         tableView.dataSource = dataSource
         tableView.delegate = tableDelegate
@@ -70,5 +77,12 @@ extension ResultSearchView: ResultSearchDelegateProtocol {
     func showDetailProduct(index: Int) {
         let id = dataSource.getProductID(index: index)
         delegate?.showDatail(id)
+    }
+}
+
+extension ResultSearchView {
+    @objc func refreshData() {
+        delegate?.reloadTableView()
+        tableView.refreshControl?.endRefreshing()
     }
 }

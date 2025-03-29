@@ -18,10 +18,10 @@ class HeaderSearchView: UIView {
         return label
     }()
     
-    init(searchQuery: String, hasResults: Bool) {
+    init(searchQuery: String, hasResults: Bool, isLoading: Bool) {
         super.init(frame: .zero)
         setupView()
-        configure(with: searchQuery, hasResults: hasResults)
+        configure(with: searchQuery, hasResults: hasResults, isLoading: isLoading)
     }
     
     required init?(coder: NSCoder) {
@@ -41,8 +41,9 @@ class HeaderSearchView: UIView {
         ])
     }
     
-    func configure(with searchQuery: String, hasResults: Bool) {
+    func configure(with searchQuery: String, hasResults: Bool, isLoading: Bool = false) {
         let boldText = hasResults ? "Resultados para: " : "Não foram encontrados resultados para "
+        let loadingText = "Carregando..."
         let normalText = "\"\(searchQuery)\""
         
         let boldAttributes: [NSAttributedString.Key: Any] = [
@@ -55,8 +56,10 @@ class HeaderSearchView: UIView {
             .foregroundColor: UIColor.white
         ]
         
-        let attributedString = NSMutableAttributedString(string: boldText, attributes: boldAttributes)
-        attributedString.append(NSAttributedString(string: normalText, attributes: normalAttributes))
+        let attributedString = NSMutableAttributedString(string: isLoading ? loadingText : boldText, attributes: boldAttributes)
+        if !isLoading {
+            attributedString.append(NSAttributedString(string: normalText, attributes: normalAttributes))
+        }
         
         titleLabel.attributedText = attributedString
     }

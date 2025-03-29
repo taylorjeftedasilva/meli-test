@@ -32,5 +32,3 @@ extension CoordinatorViewController {
         navigationController?.popViewController(animated: true)
     }
 }
-
-

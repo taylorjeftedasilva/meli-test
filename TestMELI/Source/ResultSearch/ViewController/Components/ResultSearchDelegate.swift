@@ -22,7 +22,7 @@ class ResultSearchDelegate: NSObject, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = HeaderSearchView(searchQuery: searchQuery, hasResults: hasResults)
+        let headerView = HeaderSearchView(searchQuery: searchQuery, hasResults: hasResults, isLoading: searchQuery == "" ? true : false)
         return headerView
     }
     

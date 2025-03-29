@@ -46,17 +46,14 @@ extension ListProductController: UIConfigurations {
             switch result {
             case .success(let products):
                 self?.listProductsView.setProductDataSource(products: products)
-                DispatchQueue.main.async {
-                    self?.stopLoading()
-                }
             case .failure(let error):
                 DispatchQueue.main.async {
                     self?.delegate?.showError(error,
                                               retryAgain: self?.viewModel.fetchProdutos)
                 }
-            case .loading(_):
+            case .loading(let loading):
                 DispatchQueue.main.async {
-                    self?.startLoading()
+                    loading ? self?.startLoading() : self?.stopLoading()
                 }
             }
         }

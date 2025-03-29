@@ -23,12 +23,15 @@ class ListProductViewModel: ListProductViewModelProtocol {
     }
     
     func fetchProdutos() {
+        self.data.value = .loading(true)
         service.fetchProducts { [weak self]  result in
             switch result {
             case .success(let data):
                 self?.data.value = .success(ProductResponse(data: data))
+                self?.data.value = .loading(false)
             case .failure(let error):
                 self?.data.value = .failure(error)
+                self?.data.value = .loading(false)
             }
         }
     }
