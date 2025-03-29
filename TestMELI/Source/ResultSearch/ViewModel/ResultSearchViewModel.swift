@@ -11,6 +11,7 @@ import UIKit
 protocol ResultSearchViewModelProtocol {
     var data: Binding<Response<ResultSearchResponse>> { get }
     func fetchProdutos() -> Void
+    func getSearch() -> String
     func fetchImage(url: String, completion: @escaping (UIImage?, String) -> Void) -> Void
 }
 
@@ -40,5 +41,9 @@ class ResultSearchViewModel: ResultSearchViewModelProtocol {
         ImageLoader.shared.loadImage(from: url) { image, url in
             completion(image, url)
         }
+    }
+    
+    func getSearch() -> String {
+        return self.search
     }
 }

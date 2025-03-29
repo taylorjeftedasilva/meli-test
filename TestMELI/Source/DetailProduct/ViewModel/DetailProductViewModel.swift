@@ -9,7 +9,7 @@ import UIKit
 
 protocol DetailProductViewModelProtocol {
     var data: Binding<Response<DetailProductResponse>> { get }
-    func fetchProduto() -> Void
+    func fetchProduct() -> Void
     func fetchImage(url: String, completion: @escaping (UIImage?, String) -> Void) -> Void
 }
 
@@ -25,7 +25,7 @@ class DetailProductViewModel: DetailProductViewModelProtocol {
         self.service = service
     }
     
-    func fetchProduto() {
+    func fetchProduct() {
         service.fetchProduct(productID: detailID) { [weak self] result in
             switch result {
             case .success(let data):

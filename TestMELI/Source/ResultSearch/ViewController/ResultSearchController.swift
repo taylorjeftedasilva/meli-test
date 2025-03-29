@@ -10,10 +10,10 @@ import UIKit
 class ResultSearchController: CoordinatorViewController {
     
     private let resultSearchView: ResultSearchView
-    private let viewModel: ResultSearchViewModel
+    private let viewModel: ResultSearchViewModelProtocol
     weak var delegate: ResultSearchCoordinatorProtocol? = nil
     
-    init(coordinator: CoordinatorProtocol, nibName: String? = nil, bundle: Bundle? = nil, viewModel: ResultSearchViewModel) {
+    init(coordinator: CoordinatorProtocol, nibName: String? = nil, bundle: Bundle? = nil, viewModel: ResultSearchViewModelProtocol) {
         self.viewModel  = viewModel
         self.resultSearchView = ResultSearchView()
         super.init(coordinator: coordinator, nibName: nibName, bundle: bundle)
@@ -22,15 +22,15 @@ class ResultSearchController: CoordinatorViewController {
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.hidesBackButton = true
         setup()
+        setupNavigationController()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavigationController()
     }
 }
 
@@ -42,7 +42,8 @@ extension ResultSearchController: UIConfigurations {
         viewModel.data.bind { [weak self] result in
             switch result {
             case .success(let products):
-                self?.resultSearchView.setProductDataSource(products: products)
+                guard let search = self?.viewModel.getSearch() else { return }
+                self?.resultSearchView.setProductDataSource(products: products, search: search)
                 DispatchQueue.main.async {
                     self?.stopLoading()
                 }
@@ -77,6 +78,7 @@ extension ResultSearchController {
     func setupNavigationController() {
         DispatchQueue.main.async { [weak self] in
             self?.navigationController?.isNavigationBarHidden = false
+            self?.setupNavigationControllerColor()
         }
     }
 }
@@ -85,4 +87,9 @@ extension ResultSearchController: ResultSearchViewProtocol {
     func showDatail(_ id: Int) {
         delegate?.showDetail(id)
     }
+
+    @objc override func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+
 }
