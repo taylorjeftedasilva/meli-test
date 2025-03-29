@@ -1,8 +1,8 @@
 //
-//  ListProductsData.swift
+//  ListResultSearchData.swift
 //  TestMELI
 //
-//  Created by Taylor Jefte da silva on 25/03/25.
+//  Created by Taylor Jefte da silva on 28/03/25.
 //
 
 struct ListResultSearchData: Decodable {
