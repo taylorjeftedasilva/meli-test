@@ -45,7 +45,7 @@ extension ResultSearchCoordinator: ResultSearchCoordinatorProtocol {
         detail.start()
     }
     
-    func popController() {
+    private func popController() {
         configuration.navigationController?.popViewController(animated: true)
     }
 }
