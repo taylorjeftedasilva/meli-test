@@ -23,12 +23,12 @@ class ListProductViewModel: ListProductViewModelProtocol {
     }
     
     func fetchProdutos() {
-        service.fetchProducts { result in
+        service.fetchProducts { [weak self]  result in
             switch result {
             case .success(let data):
-                self.data.value = .success(ProductResponse(data: data))
+                self?.data.value = .success(ProductResponse(data: data))
             case .failure(let error):
-                self.data.value = .failure(error)
+                self?.data.value = .failure(error)
             }
         }
     }

@@ -10,6 +10,7 @@ import UIKit
 
 protocol ResultSearchCoordinatorProtocol: AnyObject {
     func showDetail(_ id: Int) -> Void
+    func showError(_ error: APIError) -> Void
 }
 
 class ResultSearchCoordinator: BaseCoordinator {
@@ -29,6 +30,13 @@ class ResultSearchCoordinator: BaseCoordinator {
 }
 
 extension ResultSearchCoordinator: ResultSearchCoordinatorProtocol {
+    
+    func showError(_ error: APIError) {
+        let errorCoordinator = ErrorCoordinator(with: configuration)
+        errorCoordinator.errorType = error
+        errorCoordinator.start()
+    }
+    
     func showDetail(_ id: Int) {
         let detail = DetailProductCoordinator(with: configuration, parentCoordinator: self)
         detail.productID = id

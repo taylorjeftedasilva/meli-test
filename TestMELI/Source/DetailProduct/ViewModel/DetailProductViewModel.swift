@@ -26,12 +26,12 @@ class DetailProductViewModel: DetailProductViewModelProtocol {
     }
     
     func fetchProduto() {
-        service.fetchProduct(productID: detailID) { result in
+        service.fetchProduct(productID: detailID) { [weak self] result in
             switch result {
             case .success(let data):
-                self.data.value = .success(DetailProductResponse(data: data))
+                self?.data.value = .success(DetailProductResponse(data: data))
             case .failure(let error):
-                self.data.value = .failure(error)
+                self?.data.value = .failure(error)
             }
         }
     }

@@ -46,8 +46,9 @@ extension ResultSearchController: UIConfigurations {
                 DispatchQueue.main.async {
                     self?.stopLoading()
                 }
-            case .failure(_):
+            case .failure(let error):
                 DispatchQueue.main.async {
+                    self?.delegate?.showError(error)
                     self?.stopLoading()
                 }
             case .loading(_):

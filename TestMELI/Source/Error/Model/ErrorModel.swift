@@ -6,7 +6,7 @@
 //
 
 struct ErrorModel {
-    let buttonIcon: String?
-    let description: String
-    let errorIcon: String
+    let type: ErrorType
+    let message: String
+    let showCloseButton: Bool
 }

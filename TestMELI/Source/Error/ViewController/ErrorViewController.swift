@@ -15,7 +15,7 @@ class ErrorViewController: CoordinatorViewController {
     
     init(coordinator: CoordinatorProtocol, nibName: String? = nil, bundle: Bundle? = nil, viewModel: ErrorViewModel) {
         self.viewModel  = viewModel
-        self.errorView = ErrorView(errorType: .generic, message: "")
+        self.errorView = ErrorView(model: .init(type: .generic, message: "", showCloseButton: true))
         super.init(coordinator: coordinator, nibName: nibName, bundle: bundle)
     }
     
@@ -36,28 +36,28 @@ class ErrorViewController: CoordinatorViewController {
 
 // MARK: - Layout
 extension ErrorViewController: UIConfigurations {
-//    
-//    func setupConfigurations() {
+    
+    func setupConfigurations() {
 //        errorView.delegate = self
-//        viewModel.data.bind { [weak self] result in
-//            switch result {
-//            case .success(let products):
-//                self?.resultSearchView.setProductDataSource(products: products)
-//                DispatchQueue.main.async {
-//                    self?.stopLoading()
-//                }
-//            case .failure(_):
-//                DispatchQueue.main.async {
-//                    self?.stopLoading()
-//                }
-//            case .loading(_):
-//                DispatchQueue.main.async {
-//                    self?.startLoading()
-//                }
-//            }
-//        }
-//        self.viewModel.fetchProdutos()
-//    }
+        viewModel.data.bind { [weak self] result in
+            switch result {
+            case .success(let error):
+                self?.errorView.configure(with: error)
+                DispatchQueue.main.async {
+                    self?.stopLoading()
+                }
+            case .failure(_):
+                DispatchQueue.main.async {
+                    self?.stopLoading()
+                }
+            case .loading(_):
+                DispatchQueue.main.async {
+                    self?.startLoading()
+                }
+            }
+        }
+        self.viewModel.fetchError()
+    }
     
     func setupHierarchy() {
         view.addSubview(errorView)
