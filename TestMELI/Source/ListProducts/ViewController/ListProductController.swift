@@ -11,11 +11,17 @@ class ListProductController: CoordinatorViewController {
     
     private let listProductsView: ListProductView
     private let viewModel: ListProductViewModel
+    private let coordinatorDelegate: ListProductCoordinatorProtocol
     weak var delegate: ListProductCoordinatorProtocol? = nil
     
-    init(coordinator: CoordinatorProtocol, nibName: String? = nil, bundle: Bundle? = nil, viewModel: ListProductViewModel) {
+    init(coordinator: CoordinatorProtocol,
+         nibName: String? = nil,
+         bundle: Bundle? = nil,
+         viewModel: ListProductViewModel,
+         coordinatorDelegate: ListProductCoordinatorProtocol) {
         self.viewModel  = viewModel
         self.listProductsView = ListProductView()
+        self.coordinatorDelegate = coordinatorDelegate
         super.init(coordinator: coordinator, nibName: nibName, bundle: bundle)
     }
     
@@ -57,6 +63,7 @@ extension ListProductController: UIConfigurations {
             }
         }
         self.viewModel.fetchProdutos()
+        self.listProductsView.configureSearchBar(delegate: self)
     }
     
     func setupHierarchy() {
@@ -84,5 +91,13 @@ extension ListProductController {
 extension ListProductController: ListProductViewProtocol {
     func showDatail(_ id: Int) {
         delegate?.showDetail(id)
+    }
+}
+
+extension ListProductController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+        searchBar.resignFirstResponder()
+        coordinatorDelegate.showResultSearch(search: searchText)
     }
 }
