@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ResultSearchController: CoordinatorViewController {
+final class ResultSearchController: CoordinatorViewController {
     
     private let resultSearchView: ResultSearchView
     private let viewModel: ResultSearchViewModelProtocol

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ResultSearchDatasource: NSObject, UITableViewDataSource {
+final class ResultSearchDatasource: NSObject, UITableViewDataSource {
     
     private var produtos: ResultSearchResponse? = nil
     
