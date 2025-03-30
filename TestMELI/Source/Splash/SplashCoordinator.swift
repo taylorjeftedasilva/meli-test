@@ -1,6 +1,6 @@
 //
 //  SplashCoordinator.swift
-//  MarketplaceDelivery
+//  TestMELI
 //
 //  Created by Taylor Jefte da silva on 25/03/25.
 //
@@ -28,7 +28,7 @@ class SplashCoordinator: BaseCoordinator {
 
 extension SplashCoordinator: SplashViewControllerDelegate {
     func startLogin() {
-        let coordinator = LoginCoordinator(with: configuration, parentCoordinator: self)
+        let coordinator: LoginCoordinatorStarterProtocol = LoginCoordinator(with: configuration, parentCoordinator: self)
         coordinator.start()
     }
 }

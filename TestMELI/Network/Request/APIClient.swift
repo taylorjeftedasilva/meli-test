@@ -16,6 +16,7 @@ protocol APIClientProtocol {
         requiresAuth: Bool,
         completion: @escaping (Result<T, APIError>) -> Void
     )
+    func cancelRequest() -> Void
 }
 
 enum HTTPMethod: String {
@@ -32,21 +33,22 @@ enum HTTPMethod: String {
 }
 
 class APIClient: APIClientProtocol {
-    
+
     static let shared = APIClient()
     private let tokenManager: TokenManagerProtocol
     private let authService: AuthService
     private let logger = Logger(subsystem: "com.testmeli.app", category: "Networking")
-    
+    private var currentTask: URLSessionDataTask?
+
     private init(tokenManager: TokenManagerProtocol = TokenManager.shared, authService: AuthService = AuthService.shared) {
         self.tokenManager = tokenManager
         self.authService = authService
     }
-    
+
     func request<T: Decodable>(
         endpoint: String,
         method: HTTPMethod = .get,
-        body: [String: Any]? = nil,
+        body: [String : Any]? = nil,
         requiresAuth: Bool = true,
         completion: @escaping (Result<T, APIError>) -> Void
     ) {
@@ -83,14 +85,19 @@ class APIClient: APIClientProtocol {
     
     private func performRequest<T: Decodable>(request: URLRequest, completion: @escaping (Result<T, APIError>) -> Void) {
         logger.info("Enviando requisição para \(request.url?.absoluteString ?? "URL desconhecida")")
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if let urlError = error as? URLError, urlError.code == .notConnectedToInternet {
                 self.logger.error("Erro: Sem conexão com a internet")
                 completion(.failure(.noInternetConnection))
                 return
             }
             
+            if let error = error as NSError?, error.code == NSURLErrorCancelled {
+                self.logger.info("Requisição cancelada")
+                return
+            }
+
             if let error = error {
                 self.logger.error("Erro desconhecido: \(error.localizedDescription)")
                 completion(.failure(.unknown(error)))
@@ -111,7 +118,7 @@ class APIClient: APIClientProtocol {
                     switch result {
                     case .success:
                         self.logger.info("Refresh token bem-sucedido, reexecutando requisição")
-                        self.retryRequest(request: request, completion: completion)
+                        _ = self.retryRequest(request: request, completion: completion)
                     case .failure(.noInternetConnection):
                         self.logger.error("Erro: Sem conexão durante refresh token")
                         completion(.failure(.unauthorized))
@@ -137,7 +144,9 @@ class APIClient: APIClientProtocol {
                 self.logger.error("Erro ao decodificar JSON: \(error.localizedDescription)")
                 completion(.failure(.decodingError))
             }
-        }.resume()
+        }
+        
+        task.resume()
     }
     
     private func retryRequest<T: Decodable>(request: URLRequest, completion: @escaping (Result<T, APIError>) -> Void) {
@@ -148,5 +157,10 @@ class APIClient: APIClientProtocol {
         
         logger.info("Reexecutando requisição após refresh token")
         performRequest(request: newRequest, completion: completion)
+    }
+    
+    func cancelRequest() {
+        currentTask?.cancel()
+        logger.info("Requisição cancelada pelo usuário")
     }
 }

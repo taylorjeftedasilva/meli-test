@@ -13,7 +13,10 @@ class ListProductController: CoordinatorViewController {
     private let viewModel: ListProductViewModel
     weak var delegate: ListProductCoordinatorProtocol? = nil
     
-    init(coordinator: CoordinatorProtocol, nibName: String? = nil, bundle: Bundle? = nil, viewModel: ListProductViewModel) {
+    init(coordinator: CoordinatorProtocol,
+         nibName: String? = nil,
+         bundle: Bundle? = nil,
+         viewModel: ListProductViewModel) {
         self.viewModel  = viewModel
         self.listProductsView = ListProductView()
         super.init(coordinator: coordinator, nibName: nibName, bundle: bundle)
@@ -43,20 +46,19 @@ extension ListProductController: UIConfigurations {
             switch result {
             case .success(let products):
                 self?.listProductsView.setProductDataSource(products: products)
+            case .failure(let error):
                 DispatchQueue.main.async {
-                    self?.stopLoading()
+                    self?.delegate?.showError(error,
+                                              retryAgain: self?.viewModel.fetchProducts)
                 }
-            case .failure(_):
+            case .loading(let loading):
                 DispatchQueue.main.async {
-                    self?.stopLoading()
-                }
-            case .loading(_):
-                DispatchQueue.main.async {
-                    self?.startLoading()
+                    loading ? self?.startLoading() : self?.stopLoading()
                 }
             }
         }
-        self.viewModel.fetchProdutos()
+        self.viewModel.fetchProducts()
+        self.listProductsView.configureSearchBar(delegate: self)
     }
     
     func setupHierarchy() {
@@ -75,13 +77,30 @@ extension ListProductController: UIConfigurations {
 extension ListProductController {
     func setupNavigationController() {
         DispatchQueue.main.async { [weak self] in
-            self?.navigationController?.isNavigationBarHidden = true
+            self?.navigationController?.isNavigationBarHidden = false
+            self?.navigationItem.setHidesBackButton(true, animated: true)
         }
     }
 }
 
 extension ListProductController: ListProductViewProtocol {
+    func fetchProdutos(isLoadMore: Bool) {
+        viewModel.fetchProducts(isLoadMore: isLoadMore)
+    }
+    
+    func loadMore() -> Bool {
+        viewModel.loadMore()
+    }
+    
     func showDatail(_ id: Int) {
         delegate?.showDetail(id)
+    }
+}
+
+extension ListProductController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text, !searchText.isEmpty else { return }
+        searchBar.resignFirstResponder()
+        delegate?.showResultSearch(search: searchText)
     }
 }

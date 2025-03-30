@@ -9,6 +9,8 @@ import UIKit
 
 protocol ListProductViewProtocol: AnyObject {
     func showDatail(_ id: Int) -> Void
+    func fetchProdutos(isLoadMore: Bool)
+    func loadMore() -> Bool
 }
 
 class ListProductView: UIView {
@@ -115,9 +117,21 @@ extension ListProductView: UISearchBarDelegate {
     private func hideOverlay() {
         overlayView.isHidden = true
     }
+    
+    func configureSearchBar(delegate: UISearchBarDelegate) {
+        searchBar.delegate = delegate
+    }
 }
 
 extension ListProductView: ListProductDelegateProtocol {
+    func fetchProdutos(isLoadMore: Bool) {
+        delegate?.fetchProdutos(isLoadMore: isLoadMore)
+    }
+    
+    func loadMore() -> Bool {
+        delegate?.loadMore() ?? false
+    }
+    
     func showDetailProduct(index: Int) {
         let id = dataSource.getProductID(index: index)
         delegate?.showDatail(id)

@@ -1,6 +1,6 @@
 //
 //  LoginViewController.swift
-//  MarketplaceDelivery
+//  TestMELI
 //
 //  Created by Taylor Jefte da silva on 25/03/25.
 //
@@ -13,7 +13,7 @@ class LoginViewController: CoordinatorViewController {
     private var loginView: LoginView = LoginView()
     private let viewModel: LoginViewModelProtocol
     
-    init(coordinator: CoordinatorProtocol, nibName: String? = nil, bundle: Bundle? = nil, viewModel: LoginViewModel) {
+    init(coordinator: CoordinatorProtocol, nibName: String? = nil, bundle: Bundle? = nil, viewModel: LoginViewModelProtocol) {
         self.viewModel  = viewModel
         super.init(coordinator: coordinator, nibName: nibName, bundle: bundle)
     }
@@ -31,8 +31,8 @@ class LoginViewController: CoordinatorViewController {
 // MARK: - Actions
 extension LoginViewController: LoginViewProtocol {
     
-    func handleLogin(emailText: String?, passwordText: String?) {
-        viewModel.handleLogin(email: emailText, password: passwordText)
+    func handleLogin(emailText: String?, passwordText: String?, completion: @escaping (Bool) -> Void) {
+        viewModel.handleLogin(email: emailText, password: passwordText, completion: completion)
     }
 }
 
