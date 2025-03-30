@@ -174,8 +174,8 @@
             filePath = "TestMELI/Source/ListProducts/ViewModel/ListProductViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
             landmarkName = "fetchProducts(isLoadMore:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -190,8 +190,8 @@
             filePath = "TestMELI/Source/ListProducts/ViewModel/ListProductViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "fetchProducts(isLoadMore:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -206,8 +206,8 @@
             filePath = "TestMELI/Source/ListProducts/ViewModel/ListProductViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
             landmarkName = "fetchProducts(isLoadMore:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -254,8 +254,8 @@
             filePath = "TestMELI/Source/ListProducts/ViewModel/ListProductViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
             landmarkName = "fetchProducts(isLoadMore:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -270,8 +270,8 @@
             filePath = "TestMELI/Source/ListProducts/ViewModel/ListProductViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
             landmarkName = "fetchProducts(isLoadMore:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -286,8 +286,8 @@
             filePath = "TestMELI/Source/ListProducts/ViewModel/ListProductViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "fetchProducts(isLoadMore:)"
             landmarkType = "7">
          </BreakpointContent>
