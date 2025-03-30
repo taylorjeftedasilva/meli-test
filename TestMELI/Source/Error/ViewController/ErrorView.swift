@@ -12,7 +12,7 @@ protocol ErrorViewProtocol: AnyObject {
     func tappedRetryButton() -> Void
 }
 
-class ErrorView: UIView {
+final class ErrorView: UIView {
     
     private let imageView: UIImageView = {
         let view = UIImageView()

@@ -10,40 +10,8 @@ import XCTest
 
 class LoginViewControllerTests: XCTestCase {
     
-    var loginViewController: LoginViewController!
-    var mockViewModel: MockLoginViewModel!
-    var mockWindow: UIWindow!
-    var mockConfiguration: MockCoordinatorConfiguration!
-    var mockCoordinator: MockBaseCoordinator!
-    
-    override func setUp() {
-        super.setUp()
-        
-        mockViewModel = MockLoginViewModel()
-        mockWindow = UIWindow()
-        mockConfiguration = MockCoordinatorConfiguration(window: mockWindow)
-        mockCoordinator = MockBaseCoordinator(with: mockConfiguration)
-        loginViewController = LoginViewController(coordinator: mockCoordinator, viewModel: mockViewModel)
-    }
-    
-    override func tearDown() {
-        loginViewController = nil
-        mockViewModel = nil
-        mockCoordinator = nil
-        super.tearDown()
-    }
-    
-    func testHandleLogin_CallsViewModelHandleLogin() {
-        let expectation = self.expectation(description: "handleLogin is called")
-        mockViewModel.handleLogin(email: "test@example.com", password: "password") { success in
-                XCTAssertTrue(self.mockViewModel.handleLoginCalled, "handleLogin deveria ser chamado")
-            expectation.fulfill()
-            }
-        mockViewModel.simulateLoginResult(true)
-        waitForExpectations(timeout: 1, handler: nil)
-    }
-    
     func testHandleLogin_SuccessfulLogin() {
+        let (loginViewController, mockViewModel) = makeSut()
         let expectation = self.expectation(description: "Login success")
         loginViewController.handleLogin(emailText: "test@example.com", passwordText: "password") { success in
             XCTAssertTrue(success, "O login deveria ser bem-sucedido")
@@ -54,6 +22,7 @@ class LoginViewControllerTests: XCTestCase {
     }
     
     func testHandleLogin_FailedLogin() {
+        let (loginViewController, mockViewModel) = makeSut()
         let expectation = self.expectation(description: "Login failed")
         loginViewController.handleLogin(emailText: "wrong@example.com", passwordText: "wrongpassword") { success in
             XCTAssertFalse(success, "O login deveria falhar")
@@ -64,6 +33,7 @@ class LoginViewControllerTests: XCTestCase {
     }
     
     func testSetupUI() {
+        let (loginViewController, _) = makeSut()
         XCTAssertNotNil(loginViewController.view, "A view não foi carregada corretamente")
         XCTAssertTrue(loginViewController.view.subviews.contains(loginViewController.view.subviews.first!), "A view de login não foi adicionada à hierarquia da view.")
     }
@@ -79,5 +49,23 @@ class MockLoginViewModel: LoginViewModelProtocol {
     
     func simulateLoginResult(_ result: Bool) {
         completion?(result)
+    }
+}
+
+extension LoginViewControllerTests {
+    private func makeSut() -> (LoginViewController, MockLoginViewModel) {
+        let mockWindow = UIWindow()
+        let mockConfiguration = MockCoordinatorConfiguration(window: mockWindow)
+        let mockNavController = MockNavigationController()
+        let mockCoordinator = MockBaseCoordinator(with: mockConfiguration)
+        let mockViewModel: MockLoginViewModel = MockLoginViewModel()
+        let loginViewController = LoginViewController(coordinator: mockCoordinator, viewModel: mockViewModel)
+        checkMemoryLeak(for: mockWindow)
+        checkMemoryLeak(for: mockConfiguration)
+        checkMemoryLeak(for: mockNavController)
+        checkMemoryLeak(for: mockCoordinator)
+        checkMemoryLeak(for: loginViewController)
+        checkMemoryLeak(for: mockViewModel)
+        return (loginViewController, mockViewModel)
     }
 }

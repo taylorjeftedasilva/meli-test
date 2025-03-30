@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-class SplashViewController: CoordinatorViewController {
+final class SplashViewController: CoordinatorViewController {
     
     weak var delegate: SplashViewControllerDelegate?
     private let splashView = SplashView()
@@ -23,7 +23,7 @@ class SplashViewController: CoordinatorViewController {
 extension SplashViewController: SplashViewProtocol {
     
     func animationCompletion() {
-        DispatchQueue.main.asyncAfter(deadline: .now(), execute: { [weak self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: { [weak self] in
             self?.delegate?.startLogin()
         })
     }

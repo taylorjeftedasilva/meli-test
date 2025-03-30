@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class TestMELIColors: UIColor {
+final class TestMELIColors: UIColor, @unchecked Sendable {
     
     enum Colors {
         case amarelo

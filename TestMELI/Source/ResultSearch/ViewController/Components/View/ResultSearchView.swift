@@ -12,7 +12,7 @@ protocol ResultSearchViewProtocol: AnyObject {
     func reloadTableView() -> Void
 }
 
-class ResultSearchView: UIView {
+final class ResultSearchView: UIView {
     
     private lazy var tableView: UITableView = {
         let view = UITableView()

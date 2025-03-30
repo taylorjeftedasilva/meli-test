@@ -13,7 +13,7 @@ protocol ListProductViewProtocol: AnyObject {
     func loadMore() -> Bool
 }
 
-class ListProductView: UIView {
+final class ListProductView: UIView {
     
     private lazy var searchBar: UISearchBar = {
         let view = UISearchBar()

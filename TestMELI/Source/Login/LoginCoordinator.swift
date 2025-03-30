@@ -17,7 +17,7 @@ protocol LoginCoordinatorStarterProtocol {
     func start() -> Void
 }
 
-class LoginCoordinator: BaseCoordinator, LoginCoordinatorStarterProtocol {
+final class LoginCoordinator: BaseCoordinator, LoginCoordinatorStarterProtocol {
     
     override func start() {
         guard let window = configuration.window else {

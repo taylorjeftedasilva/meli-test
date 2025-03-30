@@ -9,15 +9,15 @@ import Foundation
 import UIKit
 
 protocol ResultSearchViewModelProtocol {
-    var data: Binding<Response<ResultSearchResponse>> { get }
+    var data: Bindable<Response<ResultSearchResponse>> { get }
     func fetchProducts() -> Void
     func cancelFetch() -> Void
     func getSearch() -> String
 }
 
-class ResultSearchViewModel: ResultSearchViewModelProtocol {
+final class ResultSearchViewModel: ResultSearchViewModelProtocol {
     
-    var data: Binding<Response<ResultSearchResponse>> =  Binding(value: .loading(true))
+    var data: Bindable<Response<ResultSearchResponse>> =  Bindable(value: .loading(true))
     private let service: ResultSearchServiceProtocol
     private let search: String
     

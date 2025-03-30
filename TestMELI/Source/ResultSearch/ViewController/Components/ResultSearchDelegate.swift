@@ -11,7 +11,7 @@ protocol ResultSearchDelegateProtocol: AnyObject {
     func showDetailProduct(index: Int) -> Void
 }
 
-class ResultSearchDelegate: NSObject, UITableViewDelegate {
+final class ResultSearchDelegate: NSObject, UITableViewDelegate {
     
     weak var delegate: ResultSearchDelegateProtocol? = nil
     private var searchQuery: String = ""
@@ -27,7 +27,7 @@ class ResultSearchDelegate: NSObject, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return hasResults ? 50 : 150
+        return hasResults ? 100 : 150
     }
 }
 

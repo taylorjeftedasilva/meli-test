@@ -13,14 +13,14 @@ protocol LoginViewProtocol: AnyObject {
     func handleLogin(emailText: String?, passwordText: String?, completion: @escaping (Bool) -> Void) -> Void
 }
 
-class LoginView: UIView {
+final class LoginView: UIView {
     
     weak var delegate: LoginViewProtocol?
     
     // MARK: - UI Components
     private let emailTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "E-mail"
+        textField.placeholder = "Usuario"
         textField.borderStyle = .roundedRect
         textField.autocapitalizationType = .none
         textField.keyboardType = .emailAddress

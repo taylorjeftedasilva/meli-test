@@ -20,7 +20,7 @@ extension ErrorCoordinatorProtocol {
     }
 }
 
-class ErrorCoordinator: BaseCoordinator {
+final class ErrorCoordinator: BaseCoordinator {
     
     weak var delegate: ErrorCoordinatorProtocol? = nil
     var errorType: APIError? = nil

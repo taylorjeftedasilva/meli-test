@@ -12,7 +12,7 @@ protocol SplashViewProtocol: AnyObject {
     func animationCompletion()
 }
 
-class SplashView: UIView {
+final class SplashView: UIView {
     
     weak var delegate: SplashViewProtocol?
     
@@ -62,11 +62,11 @@ extension SplashView: UIConfigurations {
 extension SplashView {
     
     private func fadeIn() {
-        UIView.animate(withDuration: 1.5, delay: 0.2, options: [.curveEaseIn], animations: {
-            self.titleLabel.alpha = 1.0
-        }, completion: { [unowned self] finished in
+        UIView.animate(withDuration: 1.5, delay: 0.2, options: [.curveEaseIn], animations: { [weak self] in
+            self?.titleLabel.alpha = 1.0
+        }, completion: { [weak self] finished in
             if finished {
-                self.delegate?.animationCompletion()
+                self?.delegate?.animationCompletion()
             }
         })
     }

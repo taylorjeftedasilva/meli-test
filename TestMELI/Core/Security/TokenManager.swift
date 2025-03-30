@@ -1,6 +1,6 @@
 //
 //  TokenManager.swift
-//  MarketplaceDelivery
+//  TestMELI
 //
 //  Created by Taylor Jefte da silva on 25/03/25.
 //
@@ -16,7 +16,7 @@ protocol TokenManagerProtocol {
     func clearTokens()
 }
 
-class TokenManager {
+final class TokenManager {
     
     private let service = "com.example.marketplacedelivery"
     static let shared: TokenManagerProtocol = TokenManager()
