@@ -12,7 +12,7 @@ protocol DetailProductServiceProtocol {
     func cancelRequest() -> Void
 }
 
-class DetailProductService: DetailProductServiceProtocol {
+final class DetailProductService: DetailProductServiceProtocol {
     private let client : APIClientProtocol
     private let entrypoint = LocalizedString.baseURL.value + "products"
     

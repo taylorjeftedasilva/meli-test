@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class LoginViewController: CoordinatorViewController {
+final class LoginViewController: CoordinatorViewController {
     
     private var loginView: LoginView = LoginView()
     private let viewModel: LoginViewModelProtocol

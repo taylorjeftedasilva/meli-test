@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class Bindable<T> {
+public final class Bindable<T> {
     var value: T {
         didSet {
             self.bindingHandler?(value)

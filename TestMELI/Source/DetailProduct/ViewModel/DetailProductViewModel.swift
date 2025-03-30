@@ -13,7 +13,7 @@ protocol DetailProductViewModelProtocol {
     func cancelFetch() -> Void
 }
 
-class DetailProductViewModel: DetailProductViewModelProtocol {
+final class DetailProductViewModel: DetailProductViewModelProtocol {
     
     var data: Bindable<Response<DetailProductResponse>> =  Bindable(value: .loading(true))
     private let service: DetailProductServiceProtocol

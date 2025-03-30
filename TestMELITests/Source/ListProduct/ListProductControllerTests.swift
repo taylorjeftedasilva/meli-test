@@ -90,16 +90,27 @@ class MockListProductCoordinator: MockBaseCoordinator, ListProductCoordinatorPro
     }
 }
 
-class MockListProductViewModel: ListProductViewModel {
+class MockListProductViewModel: ListProductViewModelProtocol {
+    
+    var data: TestMELI.Bindable<TestMELI.Response<TestMELI.ProductResponse>> = Bindable(value: .loading(false))
     var fetchProductsCalled = false
     var loadMoreCalled = false
+    var cancelFetchCalled = false
     
-    override func fetchProducts(isLoadMore: Bool = false) {
+    func fetchProducts(isLoadMore: Bool = false) {
         fetchProductsCalled = true
     }
     
-    override func loadMore() -> Bool {
+    func loadMore() -> Bool {
         loadMoreCalled = true
         return true
+    }
+    
+    func fetchProducts() {
+        fetchProductsCalled = true
+    }
+    
+    func cancelFetch() {
+        cancelFetchCalled = true
     }
 }

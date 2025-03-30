@@ -11,7 +11,7 @@ protocol SplashViewControllerDelegate: AnyObject {
     func startLogin()
 }
 
-class SplashCoordinator: BaseCoordinator {
+final class SplashCoordinator: BaseCoordinator {
     
     override func start() {
         guard let window = configuration.window else {

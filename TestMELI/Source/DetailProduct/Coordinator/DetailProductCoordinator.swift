@@ -9,7 +9,7 @@ protocol DetailProductCoordinatorProtocol: AnyObject {
     func showError(_ error: APIError, retryAgain: (() -> Void)?) -> Void
 }
 
-class DetailProductCoordinator: BaseCoordinator {
+final class DetailProductCoordinator: BaseCoordinator {
     
     var productID: Int? = nil
     

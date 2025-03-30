@@ -15,7 +15,7 @@ protocol ResultSearchViewModelProtocol {
     func getSearch() -> String
 }
 
-class ResultSearchViewModel: ResultSearchViewModelProtocol {
+final class ResultSearchViewModel: ResultSearchViewModelProtocol {
     
     var data: Bindable<Response<ResultSearchResponse>> =  Bindable(value: .loading(true))
     private let service: ResultSearchServiceProtocol

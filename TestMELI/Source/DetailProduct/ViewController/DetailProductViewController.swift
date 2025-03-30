@@ -7,7 +7,7 @@
 
 import Foundation
 
-class DetailProductViewController: CoordinatorViewController {
+final class DetailProductViewController: CoordinatorViewController {
     
     private let viewModel: DetailProductViewModel
     private let detailProductView: DetailProductView = DetailProductView()

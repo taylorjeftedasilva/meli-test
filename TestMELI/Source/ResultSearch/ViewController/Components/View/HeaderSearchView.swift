@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HeaderSearchView: UIView {
+final class HeaderSearchView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
