@@ -13,7 +13,7 @@ protocol ResultSearchCoordinatorProtocol: AnyObject {
     func showError(_ error: APIError, retryAgain: (() -> Void)?) -> Void
 }
 
-class ResultSearchCoordinator: BaseCoordinator {
+final class ResultSearchCoordinator: BaseCoordinator {
     
     var search: String? = nil
     

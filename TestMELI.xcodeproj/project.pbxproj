@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0946AAB33007208BD19EB155 /* ListProductsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98F3415EF448B487614DD9D3 /* ListProductsData.swift */; };
-		09C16104C54872E75A30C9C4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB4CE29477F1A477B2DA408 /* ViewController.swift */; };
 		0EB2C68F0A61FDF6AA9879D0 /* SplashCoordinatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9172F22FF5EDE17EBC417A9 /* SplashCoordinatorTest.swift */; };
 		1021BDEC5B9BF9BF13E8D1EB /* DetailProductData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1AB2151094CCB8FB30E80F /* DetailProductData.swift */; };
 		1072AB18D5051AE1048BD757 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0A64ED44719248C62B14A40 /* LoginViewModel.swift */; };
@@ -130,7 +129,6 @@
 		7DF80CC5F8DEBC5BEB03BF3F /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		813C61EC645CA69DBD615F45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8B5FF282B8A6B9C424B5774B /* ListProductView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListProductView.swift; sourceTree = "<group>"; };
-		8DB4CE29477F1A477B2DA408 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8F7DA76DA46B126327706743 /* TestMELIColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestMELIColors.swift; sourceTree = "<group>"; };
 		9045C275CFA5F7341CFB030D /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		9156CE1AEE8482E8FFDA03C9 /* HeaderSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSearchView.swift; sourceTree = "<group>"; };
@@ -208,7 +206,6 @@
 			children = (
 				35A214EE4665ACE6F12D74B5 /* Assets.xcassets */,
 				A9EF2764B0FD5F7B8618CD58 /* Info.plist */,
-				8DB4CE29477F1A477B2DA408 /* ViewController.swift */,
 				F4AFD8F2B5C5792FFF15515B /* AppDelegate */,
 				AF9C902AA4C14CB8F1C8406A /* Core */,
 				12F6903A3B1305C9C83CAF05 /* Helpers */,
@@ -939,7 +936,6 @@
 				572326D0E74C6DAEB5128495 /* UIColor+Externsions.swift in Sources */,
 				EDA0C626B1B87E9BBB25DD81 /* UIConfigurations.swift in Sources */,
 				2DAE7CFC404E8A986FD636FC /* UINavigationController+Extension.swift in Sources */,
-				09C16104C54872E75A30C9C4 /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

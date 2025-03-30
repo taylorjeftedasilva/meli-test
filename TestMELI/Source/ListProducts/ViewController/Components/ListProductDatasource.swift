@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ListProductDatasource: NSObject, UITableViewDataSource {
+final class ListProductDatasource: NSObject, UITableViewDataSource {
     
     private var produtos: ProductResponse? = nil
     

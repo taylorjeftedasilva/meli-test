@@ -12,7 +12,7 @@ protocol AuthServiceProtocol: AnyObject {
     func refreshToken(completion: @escaping (Result<Bool, APIError>) -> Void)
 }
 
-class AuthService: AuthServiceProtocol {
+final class AuthService: AuthServiceProtocol {
     
     static let shared = AuthService()
     private let tokenManager: TokenManagerProtocol

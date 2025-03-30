@@ -16,7 +16,7 @@ protocol TokenManagerProtocol {
     func clearTokens()
 }
 
-class TokenManager {
+final class TokenManager {
     
     private let service = "com.example.marketplacedelivery"
     static let shared: TokenManagerProtocol = TokenManager()

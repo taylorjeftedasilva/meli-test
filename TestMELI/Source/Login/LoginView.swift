@@ -13,7 +13,7 @@ protocol LoginViewProtocol: AnyObject {
     func handleLogin(emailText: String?, passwordText: String?, completion: @escaping (Bool) -> Void) -> Void
 }
 
-class LoginView: UIView {
+final class LoginView: UIView {
     
     weak var delegate: LoginViewProtocol?
     

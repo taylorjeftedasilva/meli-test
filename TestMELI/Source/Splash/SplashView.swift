@@ -12,7 +12,7 @@ protocol SplashViewProtocol: AnyObject {
     func animationCompletion()
 }
 
-class SplashView: UIView {
+final class SplashView: UIView {
     
     weak var delegate: SplashViewProtocol?
     

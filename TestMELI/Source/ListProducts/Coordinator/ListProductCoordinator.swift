@@ -14,7 +14,7 @@ protocol ListProductCoordinatorProtocol: AnyObject {
     func showError(_ error: APIError, retryAgain: (() -> Void)?) -> Void
 }
 
-class ListProductCoordinator: BaseCoordinator {
+final class ListProductCoordinator: BaseCoordinator {
     
     override func start() {
         let viewModel = ListProductViewModel()

@@ -19,7 +19,7 @@ protocol LoginViewModelProtocol: AnyObject {
     func handleLogin(email emailText: String?, password passwordText: String?, completion: @escaping (Bool) -> Void) -> Void
 }
 
-class LoginViewModel {
+final class LoginViewModel {
     
     weak var delegate: LoginCoordinatorProtocol?
     private let serviceAuth: AuthServiceProtocol

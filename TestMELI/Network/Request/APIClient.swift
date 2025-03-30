@@ -32,7 +32,7 @@ enum HTTPMethod: String {
     }
 }
 
-class APIClient: APIClientProtocol {
+final class APIClient: APIClientProtocol {
 
     static let shared = APIClient()
     private let tokenManager: TokenManagerProtocol

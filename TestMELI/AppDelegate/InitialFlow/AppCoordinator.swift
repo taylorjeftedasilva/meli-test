@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AppCoordinator: BaseCoordinator {
+final class AppCoordinator: BaseCoordinator {
     
     override func start() {
         guard let window = configuration.window else {
