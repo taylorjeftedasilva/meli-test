@@ -9,11 +9,11 @@ import Foundation
 
 final class DetailProductViewController: CoordinatorViewController {
     
-    private let viewModel: DetailProductViewModel
+    private let viewModel: DetailProductViewModelProtocol
     private let detailProductView: DetailProductView = DetailProductView()
     weak var delegate: DetailProductCoordinatorProtocol? = nil
     
-    init(coordinator: CoordinatorProtocol, nibName: String? = nil, bundle: Bundle? = nil, viewModel: DetailProductViewModel) {
+    init(coordinator: CoordinatorProtocol, nibName: String? = nil, bundle: Bundle? = nil, viewModel: DetailProductViewModelProtocol) {
         self.viewModel  = viewModel
         super.init(coordinator: coordinator, nibName: nibName, bundle: bundle)
     }

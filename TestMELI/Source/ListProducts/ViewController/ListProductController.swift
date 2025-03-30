@@ -10,13 +10,13 @@ import UIKit
 final class ListProductController: CoordinatorViewController {
     
     private let listProductsView: ListProductView
-    private let viewModel: ListProductViewModel
+    private let viewModel: ListProductViewModelProtocol
     weak var delegate: ListProductCoordinatorProtocol? = nil
     
     init(coordinator: CoordinatorProtocol,
          nibName: String? = nil,
          bundle: Bundle? = nil,
-         viewModel: ListProductViewModel) {
+         viewModel: ListProductViewModelProtocol) {
         self.viewModel  = viewModel
         self.listProductsView = ListProductView()
         super.init(coordinator: coordinator, nibName: nibName, bundle: bundle)

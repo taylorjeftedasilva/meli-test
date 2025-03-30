@@ -8,14 +8,14 @@
 import UIKit
 
 protocol DetailProductViewModelProtocol {
-    var data: Binding<Response<DetailProductResponse>> { get }
+    var data: Bindable<Response<DetailProductResponse>> { get }
     func fetchProduct() -> Void
     func cancelFetch() -> Void
 }
 
 final class DetailProductViewModel: DetailProductViewModelProtocol {
     
-    var data: Binding<Response<DetailProductResponse>> =  Binding(value: .loading(true))
+    var data: Bindable<Response<DetailProductResponse>> =  Bindable(value: .loading(true))
     private let service: DetailProductServiceProtocol
     private let detailID: Int
     
@@ -30,11 +30,11 @@ final class DetailProductViewModel: DetailProductViewModelProtocol {
         service.fetchProduct(productID: detailID) { [weak self] result in
             switch result {
             case .success(let data):
+                self?.data.value = .loading(false)
                 self?.data.value = .success(DetailProductResponse(data: data))
-                self?.data.value = .loading(false)
             case .failure(let error):
-                self?.data.value = .failure(error)
                 self?.data.value = .loading(false)
+                self?.data.value = .failure(error)
             }
         }
     }

@@ -20,7 +20,7 @@ final class LoginView: UIView {
     // MARK: - UI Components
     private let emailTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "E-mail"
+        textField.placeholder = "Usuario"
         textField.borderStyle = .roundedRect
         textField.autocapitalizationType = .none
         textField.keyboardType = .emailAddress

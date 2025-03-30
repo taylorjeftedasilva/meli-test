@@ -28,7 +28,7 @@ final class SplashCoordinator: BaseCoordinator {
 
 extension SplashCoordinator: SplashViewControllerDelegate {
     func startLogin() {
-        let coordinator: LoginCoordinatorStarterProtocol = LoginCoordinator(with: configuration, parentCoordinator: self)
+        let coordinator: LoginCoordinatorStarterProtocol = LoginCoordinator(with: configuration)
         coordinator.start()
     }
 }
