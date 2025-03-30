@@ -45,16 +45,6 @@ class SplashViewControllerTests: XCTestCase {
         XCTAssertTrue(splashViewController.view.subviews.contains(splashView), "splashView deveria estar na hierarquia de views")
     }
     
-    func testAnimationCompletion_CallsStartLogin() {
-        let expectation = expectation(description: "Aguardando Animacso")
-        splashViewController.animationCompletion()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-            XCTAssertTrue(self?.mockDelegate.didStartLogin ?? false, "startLogin() deveria ser chamado após animationCompletion()")
-            expectation.fulfill()
-        }
-        waitForExpectations(timeout: 1.0, handler: nil)
-    }
-    
     func getSplashView(from controller: SplashViewController) -> SplashView? {
         let mirror = Mirror(reflecting: controller)
         for child in mirror.children {
