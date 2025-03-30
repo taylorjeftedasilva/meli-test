@@ -22,7 +22,6 @@ class ErrorViewControllerTests: XCTestCase {
         mockViewModel = MockErrorViewModel()
         sut = ErrorViewController(coordinator: mockCoordinator, viewModel: mockViewModel)
         sut.delegate = mockCoordinator
-        // Load view lifecycle
         _ = sut.view
     }
     
