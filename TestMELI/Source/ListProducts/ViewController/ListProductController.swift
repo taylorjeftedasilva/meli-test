@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ListProductController: CoordinatorViewController {
+final class ListProductController: CoordinatorViewController {
     
     private let listProductsView: ListProductView
     private let viewModel: ListProductViewModel

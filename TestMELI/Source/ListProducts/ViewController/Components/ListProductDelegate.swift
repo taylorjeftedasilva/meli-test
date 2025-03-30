@@ -13,7 +13,7 @@ protocol ListProductDelegateProtocol: AnyObject {
     func loadMore() -> Bool
 }
 
-class ListProductDelegate: NSObject, UITableViewDelegate {
+final class ListProductDelegate: NSObject, UITableViewDelegate {
     
     weak var delegate: ListProductDelegateProtocol? = nil
     

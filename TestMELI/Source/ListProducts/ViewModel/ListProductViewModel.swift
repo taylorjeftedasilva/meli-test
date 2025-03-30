@@ -16,7 +16,7 @@ protocol ListProductViewModelProtocol {
     func cancelFetch() -> Void
 }
 
-class ListProductViewModel: ListProductViewModelProtocol {
+final class ListProductViewModel: ListProductViewModelProtocol {
     var data: Binding<Response<ProductResponse>> =  Binding(value: .loading(false))
     private let service: ListProductsServiceProtocol
     private var produtos: [Product] = []

@@ -12,7 +12,7 @@ protocol ResultSearchServiceProtocol {
     func cancelRequest() -> Void
 }
 
-class ResultSearchService: ResultSearchServiceProtocol {
+final class ResultSearchService: ResultSearchServiceProtocol {
     
     private let client : APIClientProtocol
     private let entrypoint = LocalizedString.baseURL.value + "products"
