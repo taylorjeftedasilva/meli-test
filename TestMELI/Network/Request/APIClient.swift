@@ -118,7 +118,7 @@ class APIClient: APIClientProtocol {
                     switch result {
                     case .success:
                         self.logger.info("Refresh token bem-sucedido, reexecutando requisição")
-                        _ = self.retryRequest(request: request, completion: completion)
+                        self.retryRequest(request: request, completion: completion)
                     case .failure(.noInternetConnection):
                         self.logger.error("Erro: Sem conexão durante refresh token")
                         completion(.failure(.unauthorized))
