@@ -6,7 +6,7 @@
 //
 
 import UIKit
-class ErrorViewController: CoordinatorViewController {
+final class ErrorViewController: CoordinatorViewController {
     
     private let errorView: ErrorView
     private let viewModel: ErrorViewModel

@@ -5,7 +5,7 @@
 //  Created by Taylor Jefte da silva on 29/03/25.
 //
 
-class ErrorViewModel {
+final class ErrorViewModel {
     
     var errorType: APIError? = nil
     var data: Bindable<Response<ErrorModel>> = Bindable(value: .loading(true))
