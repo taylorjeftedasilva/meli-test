@@ -61,8 +61,10 @@ class MockErrorCoordinator: MockBaseCoordinator, ErrorCoordinatorProtocol {
     }
 }
 
-class MockErrorViewModel: ErrorViewModel {
-    override func fetchError() {
+class MockErrorViewModel: ErrorViewModelProtocol {
+    var data: TestMELI.Bindable<TestMELI.Response<TestMELI.ErrorModel>> = Bindable(value: .loading(false))
+    
+    func fetchError() {
         self.data.value = .success(ErrorModel(type: .generic, message: "Test Error", showCloseButton: true))
     }
 }

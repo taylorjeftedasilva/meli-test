@@ -26,3 +26,11 @@ class MockBaseCoordinator: BaseCoordinator {
         self.childCoordinators.append(childCoordinators)
     }
 }
+
+class MockCoordinator: CoordinatorProtocol {
+    var didCallRemoveCoordinator = false
+    
+    func removeCoordinator() {
+        didCallRemoveCoordinator = true
+    }
+}

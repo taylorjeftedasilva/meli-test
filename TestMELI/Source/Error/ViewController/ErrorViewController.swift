@@ -9,10 +9,10 @@ import UIKit
 final class ErrorViewController: CoordinatorViewController {
     
     private let errorView: ErrorView
-    private let viewModel: ErrorViewModel
+    private let viewModel: ErrorViewModelProtocol
     weak var delegate: ErrorCoordinatorProtocol? = nil
     
-    init(coordinator: CoordinatorProtocol, nibName: String? = nil, bundle: Bundle? = nil, viewModel: ErrorViewModel) {
+    init(coordinator: CoordinatorProtocol, nibName: String? = nil, bundle: Bundle? = nil, viewModel: ErrorViewModelProtocol) {
         self.viewModel  = viewModel
         self.errorView = ErrorView(model: .init(type: .generic, message: "", showCloseButton: true))
         super.init(coordinator: coordinator, nibName: nibName, bundle: bundle)

@@ -5,7 +5,12 @@
 //  Created by Taylor Jefte da silva on 29/03/25.
 //
 
-final class ErrorViewModel {
+protocol ErrorViewModelProtocol: AnyObject {
+    var data: Bindable<Response<ErrorModel>> { get }
+    func fetchError()
+}
+
+final class ErrorViewModel: ErrorViewModelProtocol {
     
     var errorType: APIError? = nil
     var data: Bindable<Response<ErrorModel>> = Bindable(value: .loading(true))
