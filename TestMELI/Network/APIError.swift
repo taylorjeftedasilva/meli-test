@@ -5,7 +5,7 @@
 //  Created by Taylor Jefte da silva on 26/03/25.
 //
 
-enum APIError: Error {
+enum APIError: Error, Equatable {
     case noInternetConnection
     case unauthorized
     case invalidResponse
@@ -30,6 +30,22 @@ enum APIError: Error {
             return "Nenhum dado recebido do servidor."
         case .unknown(let error):
             return error.localizedDescription
+        }
+    }
+    
+    static func == (lhs: APIError, rhs: APIError) -> Bool {
+        switch (lhs, rhs) {
+        case (.noInternetConnection, .noInternetConnection),
+             (.unauthorized, .unauthorized),
+             (.invalidResponse, .invalidResponse),
+             (.decodingError, .decodingError),
+             (.invalidURL, .invalidURL),
+             (.noData, .noData):
+            return true
+        case (.unknown(let lhsError), .unknown(let rhsError)):
+            return lhsError.localizedDescription == rhsError.localizedDescription
+        default:
+            return false
         }
     }
 }

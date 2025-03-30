@@ -9,32 +9,26 @@ import XCTest
 @testable import TestMELI
 
 class SplashCoordinatorTests: XCTestCase {
-    var splashCoordinator: SplashCoordinator!
-    var mockWindow: UIWindow!
-    var mockConfiguration: MockCoordinatorConfiguration!
-    var mockParentCoordinator: MockBaseCoordinator!
-
-    override func setUp() {
-        super.setUp()
-        mockWindow = UIWindow()
-        mockConfiguration = MockCoordinatorConfiguration(window: mockWindow)
-        mockParentCoordinator = MockBaseCoordinator(with: mockConfiguration)
-        splashCoordinator = SplashCoordinator(with: mockConfiguration, parentCoordinator: mockParentCoordinator)
-    }
 
     func testStart_SetsRootViewController() {
-        splashCoordinator.start()
+        let (_, mockWindow) = makeSut()
+        let expectation = expectation(description: "Aguardando Animação de Splash")
         
-        XCTAssertNotNil(mockWindow.rootViewController, "O rootViewController não deveria ser nulo após start()")
-        XCTAssertTrue(mockWindow.rootViewController is SplashViewController, "O rootViewController deveria ser um SplashViewController")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            XCTAssertNotNil(mockWindow.rootViewController, "O rootViewController não deveria ser nulo após start()")
+            XCTAssertTrue(mockWindow.rootViewController is SplashViewController, "O rootViewController deveria ser um SplashViewController")
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1.0, handler: nil)
     }
     
     func testStartLogin_CreatesLoginCoordinator() {
+        let (splashCoordinator, mockWindow) = makeSut()
         let expectation = expectation(description: "Aguardando transição para LoginViewController")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            XCTAssertTrue(self.mockWindow.rootViewController is UINavigationController, "O rootViewController deveria ser um UINavigationController após startLogin()")
-            if let navController = self.mockWindow.rootViewController as? UINavigationController {
+            XCTAssertTrue(mockWindow.rootViewController is UINavigationController, "O rootViewController deveria ser um UINavigationController após startLogin()")
+            if let navController = mockWindow.rootViewController as? UINavigationController {
                 XCTAssertTrue(navController.viewControllers.first is LoginViewController, "O primeiro viewController no UINavigationController deveria ser um LoginViewController")
             }
             expectation.fulfill()
@@ -46,3 +40,17 @@ class SplashCoordinatorTests: XCTestCase {
     }
 }
 
+extension SplashCoordinatorTests {
+    private func makeSut() -> (SplashCoordinator, UIWindow) {
+        let mockWindow = UIWindow()
+        let mockConfiguration = MockCoordinatorConfiguration(window: mockWindow)
+        let mockParentCoordinator = MockBaseCoordinator(with: mockConfiguration)
+        let splashCoordinator = SplashCoordinator(with: mockConfiguration, parentCoordinator: nil)
+        checkMemoryLeak(for: mockWindow)
+        checkMemoryLeak(for: mockConfiguration)
+        checkMemoryLeak(for: mockParentCoordinator)
+        checkMemoryLeak(for: splashCoordinator)
+        splashCoordinator.start()
+        return (splashCoordinator, mockWindow)
+    }
+}
