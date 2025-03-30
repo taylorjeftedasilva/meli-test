@@ -14,7 +14,7 @@ class HeaderSearchView: UIView {
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         label.textAlignment = .center
-        label.numberOfLines = 0
+        label.numberOfLines = 3
         return label
     }()
     
@@ -34,6 +34,7 @@ class HeaderSearchView: UIView {
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            titleLabel.bottomAnchor.constraint(greaterThanOrEqualTo: self.bottomAnchor, constant: -16),
             titleLabel.leadingAnchor.constraint(lessThanOrEqualTo: leadingAnchor, constant: 16),
             titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -16),
             titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
