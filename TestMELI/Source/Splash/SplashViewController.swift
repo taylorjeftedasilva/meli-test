@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-class SplashViewController: CoordinatorViewController {
+final class SplashViewController: CoordinatorViewController {
     
     weak var delegate: SplashViewControllerDelegate?
     private let splashView = SplashView()
