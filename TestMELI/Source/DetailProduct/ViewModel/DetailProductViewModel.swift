@@ -30,11 +30,11 @@ final class DetailProductViewModel: DetailProductViewModelProtocol {
         service.fetchProduct(productID: detailID) { [weak self] result in
             switch result {
             case .success(let data):
+                self?.data.value = .loading(false)
                 self?.data.value = .success(DetailProductResponse(data: data))
-                self?.data.value = .loading(false)
             case .failure(let error):
-                self?.data.value = .failure(error)
                 self?.data.value = .loading(false)
+                self?.data.value = .failure(error)
             }
         }
     }
