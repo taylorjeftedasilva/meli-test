@@ -8,14 +8,14 @@
 import UIKit
 
 protocol DetailProductViewModelProtocol {
-    var data: Binding<Response<DetailProductResponse>> { get }
+    var data: Bindable<Response<DetailProductResponse>> { get }
     func fetchProduct() -> Void
     func cancelFetch() -> Void
 }
 
 class DetailProductViewModel: DetailProductViewModelProtocol {
     
-    var data: Binding<Response<DetailProductResponse>> =  Binding(value: .loading(true))
+    var data: Bindable<Response<DetailProductResponse>> =  Bindable(value: .loading(true))
     private let service: DetailProductServiceProtocol
     private let detailID: Int
     

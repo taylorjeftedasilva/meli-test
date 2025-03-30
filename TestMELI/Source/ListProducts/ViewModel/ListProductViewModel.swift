@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol ListProductViewModelProtocol {
-    var data: Binding<Response<ProductResponse>> { get }
+    var data: Bindable<Response<ProductResponse>> { get }
     func fetchProducts() -> Void
     func fetchProducts(isLoadMore: Bool) -> Void
     func loadMore() -> Bool
@@ -17,7 +17,7 @@ protocol ListProductViewModelProtocol {
 }
 
 class ListProductViewModel: ListProductViewModelProtocol {
-    var data: Binding<Response<ProductResponse>> =  Binding(value: .loading(false))
+    var data: Bindable<Response<ProductResponse>> =  Bindable(value: .loading(false))
     private let service: ListProductsServiceProtocol
     private var produtos: [Product] = []
     private var isLoading = false

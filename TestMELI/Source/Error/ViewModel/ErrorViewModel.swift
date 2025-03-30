@@ -8,7 +8,7 @@
 class ErrorViewModel {
     
     var errorType: APIError? = nil
-    var data: Binding<Response<ErrorModel>> = Binding(value: .loading(true))
+    var data: Bindable<Response<ErrorModel>> = Bindable(value: .loading(true))
     
     func fetchError() {
         switch errorType {
