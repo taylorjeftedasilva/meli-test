@@ -19,6 +19,7 @@
 		2BED6827568E35F20BEBA273 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A5D11B309632153D1AF12C /* SplashView.swift */; };
 		2DAE7CFC404E8A986FD636FC /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADDA508210BBF100F30EAE24 /* UINavigationController+Extension.swift */; };
 		341A95D8892083644227A0C9 /* ErrorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194D04211041A8353F390D28 /* ErrorType.swift */; };
+		342F3A412D98A3F100F74843 /* MemoryLeak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342F3A402D98A3BE00F74843 /* MemoryLeak.swift */; };
 		34562831D3C4368FEBD85006 /* DetailProductResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E53D928E54EBFED80D96A5C /* DetailProductResponse.swift */; };
 		4B7ADB07395BC69E2F55D5AD /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D51D2049EAD225E3A8B7CB /* BaseCoordinator.swift */; };
 		4F2FA2F1352781F6BF104FF5 /* TestMELIColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7DA76DA46B126327706743 /* TestMELIColors.swift */; };
@@ -105,6 +106,7 @@
 		3078A1D11C7084A831A49156 /* SplashViewControllerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewControllerTest.swift; sourceTree = "<group>"; };
 		30F58DDED09458B608E2AA59 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		32C27A0FCC2EE3E56E74F007 /* ErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorModel.swift; sourceTree = "<group>"; };
+		342F3A402D98A3BE00F74843 /* MemoryLeak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryLeak.swift; sourceTree = "<group>"; };
 		35A214EE4665ACE6F12D74B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		396322A3FBE37329030736F5 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
 		3DEEFC7B759ABA0D6C5174A7 /* ResultSearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultSearchCoordinator.swift; sourceTree = "<group>"; };
@@ -278,6 +280,14 @@
 				ADDA508210BBF100F30EAE24 /* UINavigationController+Extension.swift */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		342F3A3F2D98A3AE00F74843 /* XCTest+Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				342F3A402D98A3BE00F74843 /* MemoryLeak.swift */,
+			);
+			path = "XCTest+Extensions";
 			sourceTree = "<group>";
 		};
 		346808B15E3B55B4C418244D /* Color */ = {
@@ -762,6 +772,7 @@
 		FE7B61548DB9AD0771FE5789 /* TestMELITests */ = {
 			isa = PBXGroup;
 			children = (
+				342F3A3F2D98A3AE00F74843 /* XCTest+Extensions */,
 				D0D0AE774B1817BADE562066 /* Mock */,
 				DFC7BD455BA3C92F13FF8772 /* Source */,
 			);
@@ -854,6 +865,7 @@
 			files = (
 				B698FF9B662A82FDA27BDBDB /* LoginCoordinatorTests.swift in Sources */,
 				95B0E70B57FD51285B68ABBD /* LoginViewControllerTests.swift in Sources */,
+				342F3A412D98A3F100F74843 /* MemoryLeak.swift in Sources */,
 				8EA164E9F0817B835BBC7813 /* LoginViewModelTests.swift in Sources */,
 				CA62C009F244E69420562230 /* MockAuthService.swift in Sources */,
 				FECEF6D462D54AF183CB0A40 /* MockCoordinator.swift in Sources */,
