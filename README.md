@@ -1,15 +1,20 @@
 # TestMELI
 
-TestMELI é um aplicativo iOS desenvolvido em Swift para listar e visualizar produtos do Mercado Livre. O projeto segue a arquitetura MVVM + Coordinator para melhor organização e manutenção do código.
+TestMELI é um aplicativo iOS desenvolvido em Swift para listar e visualizar produtos do Mercado Livre. O projeto segue a arquitetura [MVVM](https://medium.com/@zebayasmeen76/mvvm-in-ios-swift-6afb150458fd) + [Coordinator](https://www.hackingwithswift.com/articles/71/how-to-use-the-coordinator-pattern-in-ios-apps) para melhor organização e manutenção do código.
+
+> **Nota**: As APIs do Mercado Livre exigem autenticação para acesso aos dados. Para facilitar o desenvolvimento e os testes, o projeto utiliza a API [DummyJSON](https://dummyjson.com) para listar produtos e simular a autenticação de usuários.
+
 
 ## 📌 Funcionalidades
 - 🔍 Busca e listagem de produtos
 - 📄 Exibição de detalhes do produto
 - 🏁 Tela de splash para carregamento inicial
 - 🔑 Autenticação de usuário via API
+- 🔎 Exibição de resultados de pesquisa
+- ⚠️ Tela de erro para falhas na requisição
 
 ## 🏗 Arquitetura do Projeto
-O projeto segue o padrão **MVVM (Model-View-ViewModel)** combinado com **Coordinator Pattern** para gerenciamento de navegação.
+O projeto segue o padrão **MVVM (Model-View-ViewModel)** combinado com [**Coordinator Pattern**](https://medium.com/@batistagc/o-que-%C3%A9-para-que-serve-e-como-usar-coordinator-em-ios-4cb310ec1e86) para gerenciamento de navegação.
 
 ### 📂 Estrutura de Pastas
 ```
@@ -18,11 +23,13 @@ TestMELI/
 │── Core/                 # Coordenadores, segurança e bindings
 │── Source/               # Código principal do app
 │   ├── Splash/           # Tela inicial
-│   ├── ListProducts/     # Listagem de produtos
+│   ├── ListProducts/     # Listagem de produtos e pesquisa de items
 │   ├── DetailProduct/    # Detalhes do produto
 │   ├── Login/            # Tela de login e autenticação
+│   ├── Error/            # Tela de error
+│   ├── ResultSearch/     # Resultado das pesquisas
 │── Network/              # Camada de requisições HTTP
-│── Tests/                # Testes unitários
+TestMELITests/                # Testes unitários
 ```
 
 ### 📜 Principais Componentes
@@ -54,13 +61,15 @@ Caso o login seja bem-sucedido, o token retornado será usado para acessar a lis
    ```bash
    git clone https://github.com/taylorjeftedasilva/meli-test.git
    ```
-2. Abra o arquivo `TestMELI.xcodeproj` no Xcode
-3. Execute o projeto no simulador ou dispositivo físico
+2. (Opcional para a branch main) Utilize o [XcodeGen](https://medium.com/@daviddvd19/xcodegen-first-steps-%EF%B8%8F-a2d4655ced86) para gerar o arquivo TestMELI.xcodeproj.
+3. Abra o arquivo `TestMELI.xcodeproj` no Xcode
+4. Execute o projeto no simulador ou dispositivo físico
 
 ## 🔧 Melhorias Futuras
-- Implementar testes unitários para `ViewModels`
-- Melhorar cache de imagens
-- Refatorar para Swift Concurrency
+- Implementar funcionalidade de logout
+- Otimizar o cache de imagens
+- Remover strings hardcoded, utilizando um sistema de constantes ou localization
+- Configurar pipeline de CI/CD para testes automatizados com cobertura mínima
 
 📌 **Desenvolvido por**: Taylor Jefté da Silva
 
