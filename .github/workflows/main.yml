@@ -48,5 +48,4 @@ jobs:
           xcodebuild test \
           -project TestMELI.xcodeproj \
           -scheme TestMELI \
-          -destination "platform=iOS Simulator,name=iPhone 16 Pro,OS=latest" \
-          CODE_SIGNING_ALLOWED=NO
+          -destination "platform=iOS Simulator,name=iPhone 16 Pro,OS=latest"
