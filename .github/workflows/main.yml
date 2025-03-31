@@ -1,4 +1,3 @@
-
 name: MAIN CI
 
 on:
@@ -27,18 +26,18 @@ jobs:
 
       - name: Compilar o projeto
         run: |
+          set -eo pipefail
           xcodebuild clean build \
           -project TestMELI.xcodeproj \
           -scheme TestMELI \
           -destination "platform=iOS Simulator,name=iPhone 16 Pro,OS=latest" \
           CODE_SIGNING_ALLOWED=NO
 
-
       - name: Rodar testes
         run: |
+          set -eo pipefail
           xcodebuild test \
           -project TestMELI.xcodeproj \
           -scheme TestMELI \
           -destination "platform=iOS Simulator,name=iPhone 16 Pro,OS=latest" \
           CODE_SIGNING_ALLOWED=NO
-
