@@ -27,6 +27,7 @@ class TokenManagerTests: XCTestCase {
         tokenManager.saveToken(accessToken)
         let retrievedToken = tokenManager.getToken()
         XCTAssertEqual(retrievedToken, accessToken, "O token salvo deve ser recuperado corretamente.")
+        
     }
     
     func testSaveAndGetRefreshToken() {
