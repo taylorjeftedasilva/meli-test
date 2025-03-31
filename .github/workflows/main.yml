@@ -9,9 +9,8 @@ on:
       - main
 
 jobs:
-  build-and-test:
+  build:
     runs-on: macos-latest
-
     steps:
       - name: Checkout do código
         uses: actions/checkout@v4
@@ -32,6 +31,16 @@ jobs:
           -scheme TestMELI \
           -destination "platform=iOS Simulator,name=iPhone 16 Pro,OS=latest" \
           CODE_SIGNING_ALLOWED=NO
+
+  test:
+    runs-on: macos-latest
+    needs: build
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar versão do Xcode
+        run: sudo xcode-select -switch /Applications/Xcode_16.1.app/Contents/Developer
 
       - name: Rodar testes
         run: |
