@@ -27,8 +27,18 @@ jobs:
 
       - name: Compilar o projeto
         run: |
-          xcodebuild clean build -project TestMELI.xcodeproj -scheme TestMELI -destination "platform=iOS Simulator,name=iPhone 16 Pro,OS=latest"
+          xcodebuild clean build \
+          -project TestMELI.xcodeproj \
+          -scheme TestMELI \
+          -destination "platform=iOS Simulator,name=iPhone 16 Pro,OS=latest" \
+          CODE_SIGNING_ALLOWED=NO
+
 
       - name: Rodar testes
         run: |
-          xcodebuild test -project TestMELI.xcodeproj -scheme TestMELI -destination "platform=iOS Simulator,name=iPhone 16 Pro,OS=latest"
+          xcodebuild test \
+          -project TestMELI.xcodeproj \
+          -scheme TestMELI \
+          -destination "platform=iOS Simulator,name=iPhone 16 Pro,OS=latest" \
+          CODE_SIGNING_ALLOWED=NO
+
