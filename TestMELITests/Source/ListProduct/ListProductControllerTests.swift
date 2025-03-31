@@ -14,6 +14,7 @@ class ListProductControllerTests: XCTestCase {
         let (sut, _, _, _) = makeSut()
         sut.viewDidLoad()
         XCTAssertNotNil(sut.view, "A view do controlador não deveria ser nula após o viewDidLoad.")
+        XCTFail()
     }
     
     func testViewWillAppear_ConfiguresNavigationController() {
