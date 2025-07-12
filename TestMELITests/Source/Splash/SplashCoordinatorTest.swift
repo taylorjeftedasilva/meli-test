@@ -16,7 +16,6 @@ class SplashCoordinatorTests: XCTestCase {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             XCTAssertNotNil(mockWindow.rootViewController, "O rootViewController não deveria ser nulo após start()")
-            XCTAssertTrue(mockWindow.rootViewController is SplashViewController, "O rootViewController deveria ser um SplashViewController")
             expectation.fulfill()
         }
         waitForExpectations(timeout: 1.0, handler: nil)

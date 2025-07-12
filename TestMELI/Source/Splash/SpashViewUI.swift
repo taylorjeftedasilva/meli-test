@@ -15,7 +15,7 @@ struct SpashViewUI: View {
    
     var body: some View {
         VStack() {
-            Text("SwiftUI Meli")
+            Text("Meli")
                 .font(.system(size: 60, weight: .bold))
                 .foregroundStyle(.white)
                 .opacity(opacity)
