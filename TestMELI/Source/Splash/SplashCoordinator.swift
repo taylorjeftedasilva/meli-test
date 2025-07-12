@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 protocol SplashViewControllerDelegate: AnyObject {
     func startLogin()
@@ -17,10 +18,8 @@ final class SplashCoordinator: BaseCoordinator {
         guard let window = configuration.window else {
                     fatalError("Window não configurado no SplashCoordinator")
                 }
-        let splashViewController = SplashViewController(coordinator: self,
-                                                        nibName: nil,
-                                                        bundle: nil)
-        splashViewController.delegate = self
+        let swiftUIView = SpashViewUI(delegate: self)
+        let splashViewController = UIHostingController(rootView: swiftUIView)
         window.rootViewController = splashViewController
         window.makeKeyAndVisible()
     }
