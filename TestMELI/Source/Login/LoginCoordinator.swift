@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import SwiftUI
 
 protocol LoginCoordinatorProtocol: AnyObject {
     func showAlert(title: String, message: String) -> Void
@@ -23,12 +24,8 @@ final class LoginCoordinator: BaseCoordinator, LoginCoordinatorStarterProtocol {
         guard let window = configuration.window else {
             fatalError("Window não configurado no LoginCoordinator")
         }
-        let viewModel = LoginViewModel()
-        viewModel.delegate = self
-        let loginViewController = LoginViewController(coordinator: self,
-                                                      nibName: nil,
-                                                      bundle: nil,
-                                                      viewModel: viewModel)
+        let loginView = LoginViewUI(coordinator: self)
+        let loginViewController = UIHostingController(rootView: loginView)
         let navigationController = UINavigationController(rootViewController: loginViewController)
         configuration.navigationController = navigationController
         UIView.transition(with: window, duration: 0.3, options: .transitionCrossDissolve) {

@@ -20,11 +20,13 @@ struct SpashViewUI: View {
                 .foregroundStyle(.white)
                 .opacity(opacity)
                 .onAnimationCompleted(for: opacity) {
-                    delegate.startLogin()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                        delegate.startLogin()
+                    })
                 }.onAppear {
                     withAnimation(.easeIn(duration: 3.0)) {
-                                    opacity = 1.0
-                                }
+                        opacity = 1.0
+                    }
                 }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
